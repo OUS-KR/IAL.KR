@@ -1,0 +1,1579 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>IAL — ial.kr · The Suffix of Relation</title>
+  <meta name="description" content="ial.kr — The domain of relation, belonging, and character. Exploring the suffix that binds nouns to their essential adjective nature." />
+
+  <!-- Tailwind CSS 4.0 via CDN -->
+  <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400;1,600&family=Inter:wght@300;400;500;600&family=Cinzel:wght@400;600;700&display=swap" rel="stylesheet" />
+
+  <style type="text/tailwindcss">
+    @theme {
+      /* ── Color tokens — Celestial & Imperial palette ── */
+      --color-celestial-50:  #eef0ff;
+      --color-celestial-100: #dde2ff;
+      --color-celestial-200: #c0c8ff;
+      --color-celestial-300: #9aa4ff;
+      --color-celestial-400: #6e78f5;
+      --color-celestial-500: #3a28d4;
+      --color-celestial-600: #2e1eb8;
+      --color-celestial-700: #231694;
+      --color-celestial-800: #1a1074;
+      --color-celestial-900: #110b54;
+
+      --color-imperial-50:  #fdf8ec;
+      --color-imperial-100: #faf0d0;
+      --color-imperial-200: #f4e0a0;
+      --color-imperial-300: #eacb68;
+      --color-imperial-400: #ddb040;
+      --color-imperial-500: #c8a840;
+      --color-imperial-600: #a88830;
+      --color-imperial-700: #886820;
+      --color-imperial-800: #684e14;
+      --color-imperial-900: #4c380c;
+
+      --color-mist-50:  #f4f6fa;
+      --color-mist-100: #e8ecf4;
+      --color-mist-200: #d0d8ec;
+      --color-mist-300: #b8c8e0;
+      --color-mist-400: #9aaed0;
+      --color-mist-500: #7c94be;
+      --color-mist-600: #607aaa;
+      --color-mist-700: #4a6090;
+      --color-mist-800: #364874;
+      --color-mist-900: #243258;
+
+      --color-sovereign-50:  #f0eeff;
+      --color-sovereign-100: #e0dcff;
+      --color-sovereign-200: #c4b8ff;
+      --color-sovereign-300: #a490ff;
+      --color-sovereign-400: #8468f0;
+      --color-sovereign-500: #6840d8;
+      --color-sovereign-600: #5030b8;
+      --color-sovereign-700: #3c2298;
+      --color-sovereign-800: #2c1878;
+      --color-sovereign-900: #1e1058;
+
+      --color-void-950: #040610;
+      --color-void-900: #060814;
+      --color-void-800: #0a0c1c;
+      --color-void-700: #0e1228;
+      --color-void-600: #141a38;
+
+      /* ── Typography tokens ── */
+      --font-display: 'Cinzel', serif;
+      --font-serif:   'Playfair Display', Georgia, serif;
+      --font-body:    'Inter', system-ui, sans-serif;
+    }
+
+    @layer base {
+      *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+      html { scroll-behavior: smooth; }
+      body {
+        background-color: #040610;
+        color: #e4e8f4;
+        font-family: var(--font-body);
+        overflow-x: hidden;
+      }
+      ::selection {
+        background: rgba(58,40,212,0.38);
+        color: #eef0ff;
+      }
+    }
+
+    @layer components {
+
+      /* ── Canvas & overlays ── */
+      .ial-canvas {
+        position: fixed;
+        inset: 0;
+        width: 100%;
+        height: 100%;
+        pointer-events: none;
+        z-index: 0;
+      }
+      .celestial-grid {
+        position: fixed;
+        inset: 0;
+        z-index: 1;
+        pointer-events: none;
+        background-image:
+          linear-gradient(rgba(58,40,212,0.042) 1px, transparent 1px),
+          linear-gradient(90deg, rgba(58,40,212,0.042) 1px, transparent 1px);
+        background-size: 64px 64px;
+      }
+      .imperial-overlay {
+        position: fixed;
+        inset: 0;
+        z-index: 1;
+        pointer-events: none;
+        background:
+          radial-gradient(ellipse 75% 55% at 15% 5%,  rgba(58,40,212,0.11) 0%, transparent 65%),
+          radial-gradient(ellipse 55% 45% at 88% 90%, rgba(200,168,64,0.07) 0%, transparent 60%);
+      }
+      .vignette {
+        position: fixed;
+        inset: 0;
+        z-index: 1;
+        pointer-events: none;
+        background: radial-gradient(ellipse 100% 100% at 50% 50%, transparent 42%, rgba(4,6,16,0.92) 100%);
+      }
+
+      /* ── Header ── */
+      .site-header {
+        position: fixed;
+        top: 0; left: 0; right: 0;
+        z-index: 100;
+        padding: 0 2rem;
+        height: 64px;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        background: rgba(4,6,16,0.78);
+        backdrop-filter: blur(18px);
+        border-bottom: 1px solid rgba(58,40,212,0.18);
+      }
+      .logo-mark {
+        display: flex;
+        align-items: center;
+        gap: 0.75rem;
+        text-decoration: none;
+      }
+      .logo-icon {
+        width: 36px; height: 36px;
+        border-radius: 8px;
+        background: linear-gradient(135deg, #3a28d4 0%, #c8a840 100%);
+        display: flex; align-items: center; justify-content: center;
+        font-family: var(--font-display);
+        font-size: 13px;
+        font-weight: 600;
+        color: #fff;
+        letter-spacing: 0.06em;
+        position: relative;
+        overflow: hidden;
+      }
+      .logo-icon::before {
+        content: '';
+        position: absolute;
+        inset: 0;
+        background: linear-gradient(135deg, rgba(255,255,255,0.20) 0%, transparent 55%);
+      }
+      .logo-text {
+        font-family: var(--font-display);
+        font-size: 18px;
+        font-weight: 600;
+        color: #c0c8ff;
+        letter-spacing: 0.12em;
+      }
+      .domain-badge {
+        padding: 4px 14px;
+        border-radius: 20px;
+        background: rgba(58,40,212,0.14);
+        border: 1px solid rgba(58,40,212,0.34);
+        font-size: 11px;
+        font-weight: 500;
+        color: #9aa4ff;
+        letter-spacing: 0.10em;
+        backdrop-filter: blur(8px);
+      }
+      .header-nav {
+        display: flex;
+        align-items: center;
+        gap: 2rem;
+      }
+      .nav-link {
+        font-size: 12px;
+        color: rgba(154,164,255,0.52);
+        text-decoration: none;
+        letter-spacing: 0.10em;
+        text-transform: uppercase;
+        transition: color 0.2s;
+      }
+      .nav-link:hover { color: #9aa4ff; }
+
+      /* ── Hero ── */
+      .hero-section {
+        position: relative;
+        z-index: 10;
+        min-height: 100vh;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        padding: 120px 2rem 80px;
+        text-align: center;
+        overflow: hidden;
+      }
+      .hero-bg-text {
+        position: absolute;
+        inset: 0;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-family: var(--font-display);
+        font-size: clamp(130px, 27vw, 340px);
+        font-weight: 700;
+        color: rgba(58,40,212,0.048);
+        letter-spacing: 0.10em;
+        pointer-events: none;
+        user-select: none;
+        animation: celestialDrift 20s ease-in-out infinite alternate;
+      }
+      @keyframes celestialDrift {
+        0%   { transform: rotate(-0.4deg) scale(1.00); opacity: 0.75; }
+        50%  { transform: rotate( 0.2deg) scale(1.025); opacity: 1.0; }
+        100% { transform: rotate(-0.2deg) scale(1.05);  opacity: 0.85; }
+      }
+
+      /* Star ring behind suffix */
+      .star-ring {
+        position: absolute;
+        width: 320px; height: 320px;
+        border-radius: 50%;
+        border: 1px solid rgba(58,40,212,0.22);
+        top: 50%; left: 50%;
+        transform: translate(-50%, -50%);
+        pointer-events: none;
+        animation: starRotate 60s linear infinite;
+      }
+      .star-ring::before {
+        content: '';
+        position: absolute;
+        inset: -24px;
+        border-radius: 50%;
+        border: 1px solid rgba(200,168,64,0.12);
+      }
+      .star-ring::after {
+        content: '';
+        position: absolute;
+        inset: 24px;
+        border-radius: 50%;
+        border: 1px dashed rgba(58,40,212,0.14);
+      }
+      @keyframes starRotate {
+        from { transform: translate(-50%,-50%) rotate(0deg); }
+        to   { transform: translate(-50%,-50%) rotate(360deg); }
+      }
+
+      .hero-badge {
+        display: inline-flex;
+        align-items: center;
+        gap: 0.5rem;
+        padding: 6px 18px;
+        border-radius: 24px;
+        border: 1px solid rgba(58,40,212,0.40);
+        background: rgba(58,40,212,0.10);
+        font-size: 10px;
+        font-weight: 600;
+        color: #9aa4ff;
+        letter-spacing: 0.22em;
+        text-transform: uppercase;
+        margin-bottom: 2rem;
+        backdrop-filter: blur(8px);
+        position: relative;
+        z-index: 2;
+      }
+      .badge-dot {
+        width: 6px; height: 6px;
+        border-radius: 50%;
+        background: #3a28d4;
+        animation: pulseDot 2.4s ease-in-out infinite;
+      }
+      @keyframes pulseDot {
+        0%,100% { transform: scale(1);   opacity: 1;   box-shadow: 0 0 0 0 rgba(58,40,212,0.4); }
+        50%      { transform: scale(1.5); opacity: 0.6; box-shadow: 0 0 0 6px rgba(58,40,212,0); }
+      }
+
+      .hero-suffix {
+        font-family: var(--font-display);
+        font-size: clamp(78px, 15vw, 190px);
+        font-weight: 700;
+        line-height: 0.9;
+        letter-spacing: 0.10em;
+        background: linear-gradient(135deg, #6e78f5 0%, #3a28d4 30%, #c0c8ff 65%, #c8a840 100%);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        background-clip: text;
+        margin-bottom: 1.25rem;
+        position: relative;
+        z-index: 2;
+      }
+      .hero-suffix .dash {
+        -webkit-text-fill-color: rgba(110,120,245,0.28);
+      }
+
+      .hero-origin {
+        font-size: 12px;
+        color: rgba(154,164,255,0.40);
+        letter-spacing: 0.24em;
+        text-transform: uppercase;
+        margin-bottom: 1.5rem;
+        position: relative;
+        z-index: 2;
+      }
+      .hero-meaning {
+        font-family: var(--font-serif);
+        font-size: clamp(20px, 3vw, 34px);
+        font-style: italic;
+        color: #c0c8ff;
+        margin-bottom: 1.5rem;
+        max-width: 640px;
+        line-height: 1.45;
+        position: relative;
+        z-index: 2;
+      }
+      .hero-quote {
+        font-size: 14px;
+        color: rgba(228,232,244,0.38);
+        max-width: 520px;
+        line-height: 1.82;
+        margin-bottom: 2.5rem;
+        font-style: italic;
+        position: relative;
+        z-index: 2;
+      }
+      .hero-words {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 0.6rem;
+        justify-content: center;
+        margin-bottom: 3rem;
+        max-width: 700px;
+        position: relative;
+        z-index: 2;
+      }
+      .word-pill {
+        padding: 5px 14px;
+        border-radius: 20px;
+        background: rgba(58,40,212,0.10);
+        border: 1px solid rgba(58,40,212,0.22);
+        font-size: 12px;
+        font-weight: 500;
+        color: #9aa4ff;
+        letter-spacing: 0.04em;
+        transition: all 0.25s;
+        cursor: default;
+      }
+      .word-pill:hover {
+        background: rgba(58,40,212,0.22);
+        border-color: rgba(110,120,245,0.50);
+        color: #c0c8ff;
+        transform: translateY(-2px);
+      }
+      .hero-cta {
+        display: inline-flex;
+        align-items: center;
+        gap: 0.5rem;
+        padding: 13px 34px;
+        border-radius: 30px;
+        background: linear-gradient(135deg, #3a28d4 0%, #c8a840 100%);
+        color: #fff;
+        font-size: 13px;
+        font-weight: 600;
+        letter-spacing: 0.12em;
+        text-transform: uppercase;
+        text-decoration: none;
+        transition: all 0.3s;
+        box-shadow: 0 4px 24px rgba(58,40,212,0.32);
+        position: relative;
+        z-index: 2;
+      }
+      .hero-cta:hover {
+        transform: translateY(-3px);
+        box-shadow: 0 10px 38px rgba(200,168,64,0.36);
+      }
+
+      /* ── Stats ── */
+      .stats-section {
+        position: relative;
+        z-index: 10;
+        padding: 4rem 2rem;
+        max-width: 960px;
+        margin: 0 auto;
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 1.5rem;
+      }
+      .stat-card {
+        text-align: center;
+        padding: 2rem 1.5rem;
+        border-radius: 16px;
+        background: rgba(58,40,212,0.06);
+        border: 1px solid rgba(58,40,212,0.14);
+        backdrop-filter: blur(12px);
+        transition: transform 0.3s;
+      }
+      .stat-card:hover { transform: translateY(-4px); }
+      .stat-number {
+        font-family: var(--font-display);
+        font-size: clamp(30px, 5vw, 52px);
+        font-weight: 700;
+        background: linear-gradient(135deg, #6e78f5, #c8a840);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        background-clip: text;
+        line-height: 1;
+        margin-bottom: 0.5rem;
+        letter-spacing: 0.04em;
+      }
+      .stat-label {
+        font-size: 11px;
+        color: rgba(154,164,255,0.44);
+        letter-spacing: 0.14em;
+        text-transform: uppercase;
+      }
+
+      /* ── Section common ── */
+      .section-label {
+        font-size: 10px;
+        color: rgba(58,40,212,0.55);
+        letter-spacing: 0.28em;
+        text-transform: uppercase;
+        margin-bottom: 3rem;
+        text-align: center;
+      }
+      .section-title {
+        font-family: var(--font-display);
+        font-size: clamp(28px, 4.5vw, 52px);
+        font-weight: 700;
+        color: #c0c8ff;
+        text-align: center;
+        margin-bottom: 0.6rem;
+        letter-spacing: 0.08em;
+      }
+      .section-subtitle {
+        font-size: 14px;
+        color: rgba(228,232,244,0.36);
+        text-align: center;
+        max-width: 460px;
+        margin: 0 auto 3rem;
+        line-height: 1.75;
+      }
+
+      /* ── Letters Grid ── */
+      .letters-section {
+        position: relative;
+        z-index: 10;
+        padding: 4rem 2rem;
+        max-width: 960px;
+        margin: 0 auto;
+      }
+      .letters-grid {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 1.5rem;
+      }
+      .letter-block {
+        padding: 2.5rem 2rem;
+        border-radius: 20px;
+        background: rgba(6,8,20,0.88);
+        border: 1px solid rgba(58,40,212,0.16);
+        backdrop-filter: blur(16px);
+        position: relative;
+        overflow: hidden;
+        transition: all 0.30s;
+      }
+      .letter-block::before {
+        content: '';
+        position: absolute;
+        top: 0; left: 0; right: 0;
+        height: 2px;
+        background: linear-gradient(90deg, transparent, rgba(58,40,212,0.55), rgba(200,168,64,0.30), transparent);
+      }
+      .letter-block:hover {
+        border-color: rgba(110,120,245,0.36);
+        transform: translateY(-4px);
+        box-shadow: 0 14px 44px rgba(58,40,212,0.12);
+      }
+      .letter-char {
+        font-family: var(--font-display);
+        font-size: 60px;
+        font-weight: 700;
+        line-height: 1;
+        margin-bottom: 0.75rem;
+        background: linear-gradient(135deg, #6e78f5, #c8a840);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        background-clip: text;
+        letter-spacing: 0.04em;
+      }
+      .letter-name {
+        font-size: 11px;
+        color: rgba(154,164,255,0.65);
+        letter-spacing: 0.20em;
+        text-transform: uppercase;
+        margin-bottom: 0.75rem;
+        font-weight: 600;
+      }
+      .letter-desc {
+        font-size: 13px;
+        color: rgba(228,232,244,0.50);
+        line-height: 1.72;
+      }
+
+      /* ── Feature Cards ── */
+      .features-section {
+        position: relative;
+        z-index: 10;
+        padding: 4rem 2rem;
+        max-width: 960px;
+        margin: 0 auto;
+      }
+      .features-grid {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 1.5rem;
+      }
+      .feature-card {
+        padding: 2.5rem 2rem;
+        border-radius: 20px;
+        background: rgba(6,8,20,0.78);
+        border: 1px solid rgba(58,40,212,0.13);
+        backdrop-filter: blur(16px);
+        transition: all 0.30s;
+        position: relative;
+        overflow: hidden;
+      }
+      .feature-card::after {
+        content: '';
+        position: absolute;
+        bottom: 0; left: 0; right: 0;
+        height: 2px;
+        background: linear-gradient(90deg, transparent, rgba(200,168,64,0.40), transparent);
+        opacity: 0;
+        transition: opacity 0.3s;
+      }
+      .feature-card:hover::after { opacity: 1; }
+      .feature-card:hover {
+        border-color: rgba(110,120,245,0.30);
+        transform: translateY(-4px);
+        box-shadow: 0 18px 52px rgba(58,40,212,0.10);
+      }
+      .feature-icon {
+        font-size: 30px;
+        margin-bottom: 1.25rem;
+        display: block;
+      }
+      .feature-title {
+        font-family: var(--font-display);
+        font-size: 14px;
+        font-weight: 600;
+        color: #9aa4ff;
+        letter-spacing: 0.14em;
+        margin-bottom: 0.75rem;
+        text-transform: uppercase;
+      }
+      .feature-desc {
+        font-size: 13px;
+        color: rgba(228,232,244,0.48);
+        line-height: 1.75;
+      }
+
+      /* ── Etymology Timeline ── */
+      .etymology-section {
+        position: relative;
+        z-index: 10;
+        padding: 4rem 2rem;
+        max-width: 800px;
+        margin: 0 auto;
+      }
+      .etym-timeline {
+        position: relative;
+        padding-left: 2.5rem;
+        margin-top: 3rem;
+      }
+      .etym-timeline::before {
+        content: '';
+        position: absolute;
+        left: 9px; top: 0; bottom: 0;
+        width: 1px;
+        background: linear-gradient(to bottom, transparent, rgba(58,40,212,0.45) 15%, rgba(200,168,64,0.35) 85%, transparent);
+      }
+      .etym-step {
+        position: relative;
+        margin-bottom: 2.75rem;
+      }
+      .etym-step::before {
+        content: '';
+        position: absolute;
+        left: -2.1rem;
+        top: 5px;
+        width: 10px; height: 10px;
+        border-radius: 50%;
+        background: linear-gradient(135deg, #3a28d4, #c8a840);
+        box-shadow: 0 0 14px rgba(58,40,212,0.55);
+      }
+      .etym-era {
+        font-size: 10px;
+        color: #6e78f5;
+        letter-spacing: 0.24em;
+        text-transform: uppercase;
+        margin-bottom: 0.4rem;
+        font-weight: 600;
+      }
+      .etym-form {
+        font-family: var(--font-serif);
+        font-size: 24px;
+        font-style: italic;
+        color: #c0c8ff;
+        margin-bottom: 0.4rem;
+      }
+      .etym-note {
+        font-size: 13px;
+        color: rgba(228,232,244,0.42);
+        line-height: 1.72;
+      }
+
+      /* ── Word Gallery ── */
+      .gallery-section {
+        position: relative;
+        z-index: 10;
+        padding: 4rem 2rem;
+        max-width: 960px;
+        margin: 0 auto;
+      }
+      .gallery-grid {
+        display: grid;
+        grid-template-columns: repeat(4, 1fr);
+        gap: 1rem;
+        margin-top: 3rem;
+      }
+      .gallery-card {
+        padding: 1.5rem 1.25rem;
+        border-radius: 14px;
+        background: rgba(6,8,20,0.82);
+        border: 1px solid rgba(58,40,212,0.11);
+        text-align: center;
+        transition: all 0.25s;
+        cursor: default;
+      }
+      .gallery-card:hover {
+        border-color: rgba(200,168,64,0.35);
+        background: rgba(58,40,212,0.09);
+        transform: translateY(-3px);
+      }
+      .gallery-word {
+        font-family: var(--font-serif);
+        font-size: 16px;
+        font-style: italic;
+        color: #c0c8ff;
+        margin-bottom: 0.4rem;
+      }
+      .gallery-gloss {
+        font-size: 11px;
+        color: rgba(154,164,255,0.40);
+        letter-spacing: 0.05em;
+      }
+
+      /* ── Codex Box ── */
+      .codex-section {
+        position: relative;
+        z-index: 10;
+        padding: 4rem 2rem;
+        max-width: 800px;
+        margin: 0 auto;
+      }
+      .codex-box {
+        padding: 2.5rem 3rem;
+        border-radius: 20px;
+        background: rgba(58,40,212,0.07);
+        border: 1px solid rgba(58,40,212,0.22);
+        backdrop-filter: blur(20px);
+        position: relative;
+        overflow: hidden;
+      }
+      .codex-box::before {
+        content: '';
+        position: absolute;
+        top: 0; left: 0; right: 0;
+        height: 1px;
+        background: linear-gradient(90deg, transparent, rgba(110,120,245,0.60), rgba(200,168,64,0.40), transparent);
+      }
+      .codex-header {
+        font-size: 10px;
+        color: rgba(58,40,212,0.52);
+        letter-spacing: 0.26em;
+        text-transform: uppercase;
+        margin-bottom: 2rem;
+      }
+      .codex-row {
+        display: flex;
+        align-items: flex-start;
+        gap: 1.5rem;
+        margin-bottom: 1.25rem;
+        padding-bottom: 1.25rem;
+        border-bottom: 1px solid rgba(58,40,212,0.09);
+        font-size: 13px;
+      }
+      .codex-row:last-child { border-bottom: none; margin-bottom: 0; padding-bottom: 0; }
+      .codex-key {
+        color: rgba(110,120,245,0.62);
+        letter-spacing: 0.08em;
+        min-width: 150px;
+        font-weight: 500;
+        flex-shrink: 0;
+      }
+      .codex-val {
+        color: rgba(228,232,244,0.70);
+        line-height: 1.62;
+      }
+      .codex-val em { color: #9aa4ff; font-style: normal; font-weight: 600; }
+
+      /* ── Suffix Quintet ── */
+      .quintet-section {
+        position: relative;
+        z-index: 10;
+        padding: 4rem 2rem;
+        max-width: 1060px;
+        margin: 0 auto;
+      }
+      .quintet-grid {
+        display: grid;
+        grid-template-columns: repeat(5, 1fr);
+        gap: 1.1rem;
+        margin-top: 2.5rem;
+      }
+      .quintet-card {
+        padding: 1.75rem 1.25rem;
+        border-radius: 16px;
+        background: rgba(6,8,20,0.78);
+        border: 1px solid rgba(58,40,212,0.12);
+        text-align: center;
+        transition: all 0.3s;
+      }
+      .quintet-card.active {
+        border-color: rgba(110,120,245,0.44);
+        background: rgba(58,40,212,0.10);
+        box-shadow: 0 8px 32px rgba(58,40,212,0.14);
+      }
+      .quintet-suffix {
+        font-family: var(--font-display);
+        font-size: 28px;
+        font-weight: 700;
+        letter-spacing: 0.06em;
+        margin-bottom: 0.5rem;
+        background: linear-gradient(135deg, #6e78f5, #c8a840);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        background-clip: text;
+      }
+      .quintet-card.active .quintet-suffix {
+        background: linear-gradient(135deg, #c0c8ff, #eacb68);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        background-clip: text;
+      }
+      .quintet-pos {
+        font-size: 10px;
+        color: rgba(154,164,255,0.38);
+        letter-spacing: 0.10em;
+        text-transform: uppercase;
+        margin-bottom: 0.45rem;
+      }
+      .quintet-meaning {
+        font-size: 11px;
+        color: rgba(228,232,244,0.38);
+        letter-spacing: 0.04em;
+        line-height: 1.5;
+        margin-bottom: 0.45rem;
+      }
+      .quintet-example {
+        font-size: 11px;
+        color: rgba(154,164,255,0.55);
+        font-style: italic;
+      }
+      .quintet-domain {
+        margin-top: 0.65rem;
+        font-size: 10px;
+        color: rgba(58,40,212,0.42);
+        letter-spacing: 0.12em;
+      }
+
+      /* ── Origin ── */
+      .origin-section {
+        position: relative;
+        z-index: 10;
+        padding: 6rem 2rem;
+        max-width: 760px;
+        margin: 0 auto;
+        text-align: center;
+      }
+      .origin-glyph {
+        font-size: 84px;
+        line-height: 1;
+        margin-bottom: 1.5rem;
+        display: inline-block;
+        background: linear-gradient(135deg, #6e78f5 0%, #3a28d4 40%, #c8a840 100%);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        background-clip: text;
+        font-family: var(--font-display);
+        letter-spacing: 0.04em;
+        animation: glyphStar 5s ease-in-out infinite;
+      }
+      @keyframes glyphStar {
+        0%,100% { filter: brightness(1);   opacity: 0.90; }
+        50%      { filter: brightness(1.30); opacity: 1.0; }
+      }
+      .origin-title {
+        font-family: var(--font-serif);
+        font-size: clamp(28px, 4vw, 46px);
+        font-style: italic;
+        color: #c0c8ff;
+        margin-bottom: 1.5rem;
+        line-height: 1.28;
+      }
+      .origin-body {
+        font-size: 15px;
+        color: rgba(228,232,244,0.48);
+        line-height: 1.88;
+        max-width: 620px;
+        margin: 0 auto 2.5rem;
+      }
+
+      /* ── Contact ── */
+      .contact-section {
+        position: relative;
+        z-index: 10;
+        padding: 6rem 2rem;
+        text-align: center;
+      }
+      .contact-title {
+        font-family: var(--font-display);
+        font-size: clamp(34px, 5.5vw, 62px);
+        font-weight: 700;
+        color: #c0c8ff;
+        margin-bottom: 1rem;
+        letter-spacing: 0.08em;
+      }
+      .contact-sub {
+        font-size: 14px;
+        color: rgba(228,232,244,0.35);
+        margin-bottom: 2.5rem;
+        max-width: 420px;
+        margin-left: auto;
+        margin-right: auto;
+        line-height: 1.75;
+      }
+      .contact-email {
+        display: inline-flex;
+        align-items: center;
+        gap: 0.75rem;
+        padding: 16px 42px;
+        border-radius: 32px;
+        background: linear-gradient(135deg, #3a28d4 0%, #c8a840 100%);
+        color: #fff;
+        font-size: 16px;
+        font-weight: 600;
+        text-decoration: none;
+        letter-spacing: 0.04em;
+        transition: all 0.3s;
+        box-shadow: 0 4px 26px rgba(58,40,212,0.32);
+      }
+      .contact-email:hover {
+        transform: translateY(-3px);
+        box-shadow: 0 10px 44px rgba(200,168,64,0.40);
+      }
+
+      /* ── Footer ── */
+      .site-footer {
+        position: relative;
+        z-index: 10;
+        padding: 2rem;
+        text-align: center;
+        border-top: 1px solid rgba(58,40,212,0.10);
+        font-size: 11px;
+        color: rgba(228,232,244,0.22);
+        letter-spacing: 0.12em;
+      }
+
+      /* ── Fade-up ── */
+      .fade-up {
+        opacity: 0;
+        transform: translateY(30px);
+        transition: opacity 0.72s ease, transform 0.72s ease;
+      }
+      .fade-up.visible {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+  </style>
+</head>
+
+<body>
+
+  <!-- Particle Canvas -->
+  <canvas id="ial-canvas" class="ial-canvas"></canvas>
+  <div class="celestial-grid"></div>
+  <div class="imperial-overlay"></div>
+  <div class="vignette"></div>
+
+  <!-- ═══════════════════════════════
+       HEADER
+  ═══════════════════════════════ -->
+  <header class="site-header">
+    <a href="/" class="logo-mark">
+      <div class="logo-icon">IAL</div>
+      <span class="logo-text">ial.kr</span>
+    </a>
+    <nav class="header-nav">
+      <a href="#relation"  class="nav-link">Relation</a>
+      <a href="#etymology" class="nav-link">Etymology</a>
+      <a href="#gallery"   class="nav-link">Words</a>
+      <a href="#contact"   class="nav-link">Contact</a>
+    </nav>
+    <div class="domain-badge">suffix · -ial</div>
+  </header>
+
+  <!-- ═══════════════════════════════
+       HERO
+  ═══════════════════════════════ -->
+  <section class="hero-section">
+    <div class="hero-bg-text" aria-hidden="true">IAL</div>
+    <div class="star-ring" aria-hidden="true"></div>
+
+    <div class="hero-badge">
+      <span class="badge-dot"></span>
+      The Suffix of Relation
+    </div>
+
+    <div class="hero-suffix">
+      <span class="dash">—</span>ial
+    </div>
+
+    <p class="hero-origin">Latin -iālis · Old French -iel / -ial · English -ial</p>
+
+    <p class="hero-meaning">
+      "Of, relating to, having the character of — the suffix that binds any noun to its essential adjective nature."
+    </p>
+
+    <p class="hero-quote">
+      Where -ify acts and -ity names, -ial <em>belongs</em>.<br/>
+      It is the suffix of connection — declaring that one thing<br/>
+      is fundamentally of the nature of another.
+    </p>
+
+    <div class="hero-words">
+      <span class="word-pill">essential</span>
+      <span class="word-pill">official</span>
+      <span class="word-pill">celestial</span>
+      <span class="word-pill">editorial</span>
+      <span class="word-pill">memorial</span>
+      <span class="word-pill">imperial</span>
+      <span class="word-pill">cordial</span>
+      <span class="word-pill">aerial</span>
+      <span class="word-pill">jovial</span>
+      <span class="word-pill">remedial</span>
+      <span class="word-pill">potential</span>
+      <span class="word-pill">material</span>
+      <span class="word-pill">trivial</span>
+      <span class="word-pill">serial</span>
+      <span class="word-pill">radial</span>
+      <span class="word-pill">commercial</span>
+      <span class="word-pill">credential</span>
+      <span class="word-pill">sequential</span>
+      <span class="word-pill">industrial</span>
+      <span class="word-pill">beneficial</span>
+    </div>
+
+    <a href="#contact" class="hero-cta">
+      Explore the Relation ✦
+    </a>
+  </section>
+
+  <!-- ═══════════════════════════════
+       STATS
+  ═══════════════════════════════ -->
+  <section class="stats-section">
+    <div class="stat-card fade-up">
+      <div class="stat-number">500+</div>
+      <div class="stat-label">-ial adjectives in English</div>
+    </div>
+    <div class="stat-card fade-up">
+      <div class="stat-number">-iālis</div>
+      <div class="stat-label">Latin root form</div>
+    </div>
+    <div class="stat-card fade-up">
+      <div class="stat-number">∞</div>
+      <div class="stat-label">relations expressible</div>
+    </div>
+  </section>
+
+  <!-- ═══════════════════════════════
+       LETTERS / CORE PROPERTIES
+  ═══════════════════════════════ -->
+  <section class="letters-section" id="relation">
+    <p class="section-label">§ 01 · Three Pillars of -ial</p>
+
+    <div class="letters-grid">
+      <div class="letter-block fade-up">
+        <div class="letter-char">I</div>
+        <div class="letter-name">Identification</div>
+        <div class="letter-desc">
+          The -i- in -ial is not mere grammar — it is the connective tissue of identity. Originally the stem vowel of the base noun, it evolved into a marker of belonging: to name a thing as <em>imperial</em> is to identify it as being of the empire itself.
+        </div>
+      </div>
+      <div class="letter-block fade-up">
+        <div class="letter-char">A</div>
+        <div class="letter-name">Attribution</div>
+        <div class="letter-desc">
+          The -al core of -ial performs attribution — it says "this noun now attributes its nature to something else." Celestial attributes the sky; editorial attributes the editor; memorial attributes memory. Each -ial word is an act of linguistic attribution.
+        </div>
+      </div>
+      <div class="letter-block fade-up">
+        <div class="letter-char">L</div>
+        <div class="letter-name">Linkage</div>
+        <div class="letter-desc">
+          The final -l anchors the adjective to its noun base. It is the lock of the morphological chain — the moment the abstract noun resolves into a concrete descriptor. -ial links what is to what it <em>pertains to</em>, creating a permanent grammatical bond.
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══════════════════════════════
+       FEATURE CARDS
+  ═══════════════════════════════ -->
+  <section class="features-section">
+    <p class="section-label">§ 02 · Defining Properties</p>
+    <h2 class="section-title">The Architecture of -ial</h2>
+    <p class="section-subtitle">Three principles that make -ial the most sovereign of all English adjectival suffixes.</p>
+
+    <div class="features-grid">
+      <div class="feature-card fade-up">
+        <span class="feature-icon">⭐</span>
+        <div class="feature-title">Adjectival Power</div>
+        <p class="feature-desc">-ial transforms nouns into adjectives of relation and belonging, not merely description. To say <em style="color:#9aa4ff;">celestial</em> is not to describe the sky — it is to declare that something participates in the nature of the heavens themselves.</p>
+      </div>
+      <div class="feature-card fade-up">
+        <span class="feature-icon">🔱</span>
+        <div class="feature-title">Imperial Register</div>
+        <p class="feature-desc">-ial words occupy the highest registers of English — law, science, politics, theology, and philosophy. <em style="color:#9aa4ff;">Presidential, judicial, imperial, celestial, primordial</em> — the suffix carries the authority of Latin's most formal institutions.</p>
+      </div>
+      <div class="feature-card fade-up">
+        <span class="feature-icon">🌐</span>
+        <div class="feature-title">Wide Productivity</div>
+        <p class="feature-desc">-ial attaches to Latin and French stems with high regularity, producing over 500 English adjectives across every domain of knowledge. Its variants (-tial, -cial, -ntial) extend its reach into the most abstract reaches of the lexicon.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══════════════════════════════
+       ETYMOLOGY TIMELINE
+  ═══════════════════════════════ -->
+  <section class="etymology-section" id="etymology">
+    <p class="section-label" style="text-align:center;">§ 03 · Etymology</p>
+    <h2 class="section-title" style="font-size:clamp(26px,4vw,48px);margin-bottom:0;">From -ālis to -ial</h2>
+
+    <div class="etym-timeline">
+
+      <div class="etym-step fade-up">
+        <div class="etym-era">Proto-Indo-European · c. 3000 BCE</div>
+        <div class="etym-form">*-lo- / *-li-</div>
+        <div class="etym-note">
+          The deep root of -ial lies in the Proto-Indo-European adjectival suffix *-lo-/*-li-, which formed adjectives of relation from nouns across the whole Indo-European family. This ancient pattern — "of or pertaining to X" — is among the most durable structures in the family's morphological history.
+        </div>
+      </div>
+
+      <div class="etym-step fade-up">
+        <div class="etym-era">Classical Latin · c. 200 BCE – 200 CE</div>
+        <div class="etym-form">-ālis → -iālis</div>
+        <div class="etym-note">
+          Latin developed two parallel forms: the simple <em>-ālis</em> (e.g. <em>mortālis</em> from <em>mors</em>) and the compound <em>-iālis</em>, where the <em>-i-</em> was originally the stem vowel of the base word. Over time, -iālis was reanalysed as a single suffix. Key Latin forms: <em>officialis</em> (of an office), <em>imperialis</em> (of the empire), <em>caelestialis</em> (of heaven), <em>memorialis</em> (of memory).
+        </div>
+      </div>
+
+      <div class="etym-step fade-up">
+        <div class="etym-era">Late Latin & Church Latin · c. 300–700 CE</div>
+        <div class="etym-form">-iālis (highly productive)</div>
+        <div class="etym-note">
+          Ecclesiastical and administrative Latin made -iālis the standard suffix for formal adjectives of domain and office. Religious texts produced <em>caelestialis</em>, <em>essentiālis</em>, <em>potentiālis</em>, <em>trivialis</em> — many of these passed into medieval European languages intact through Church scholarship and imperial administration.
+        </div>
+      </div>
+
+      <div class="etym-step fade-up">
+        <div class="etym-era">Old French · c. 900–1200 CE</div>
+        <div class="etym-form">-iel / -ial</div>
+        <div class="etym-note">
+          Latin -iālis split in Old French: stressed syllables produced <em>-iel</em> (as in <em>officiel</em>), while learned and borrowed forms retained <em>-ial</em>. The Norman Conquest of 1066 introduced a flood of French -iel/-ial adjectives into English, establishing the suffix in the legal and courtly registers where it would dominate for centuries.
+        </div>
+      </div>
+
+      <div class="etym-step fade-up">
+        <div class="etym-era">Middle English · c. 1200–1500 CE</div>
+        <div class="etym-form">-ial (stabilised)</div>
+        <div class="etym-note">
+          In English the French -iel collapsed uniformly to -ial. <em>Official</em> (c. 1380), <em>memorial</em> (c. 1400), <em>imperial</em> (c. 1425), <em>cordial</em> (c. 1380) — the suffix became the standard marker of formal, Latinate adjectives in English prose, law, and theology throughout the medieval period.
+        </div>
+      </div>
+
+      <div class="etym-step fade-up">
+        <div class="etym-era">Modern English · 1500 CE → present</div>
+        <div class="etym-form">-ial (fully established)</div>
+        <div class="etym-note">
+          Modern English expanded -ial through new coinage: <em>editorial</em> (1744), <em>industrial</em> (1774), <em>commercial</em> (1680s), <em>credential</em> (15c.), <em>sequential</em> (1839), <em>artificial</em> (14c.). The suffix and its variants (-tial, -ntial, -cial) remain among the most recognisable markers of formal English vocabulary.
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- ═══════════════════════════════
+       WORD GALLERY
+  ═══════════════════════════════ -->
+  <section class="gallery-section" id="gallery">
+    <p class="section-label">§ 04 · Word Gallery</p>
+    <h2 class="section-title" style="font-size:clamp(26px,4vw,48px);">Twenty Relations</h2>
+    <p class="section-subtitle">Each word a declaration of belonging — the suffix -ial naming what pertains, what relates, what is of the nature of.</p>
+
+    <div class="gallery-grid">
+      <div class="gallery-card fade-up">
+        <div class="gallery-word">essential</div>
+        <div class="gallery-gloss">of the essence</div>
+      </div>
+      <div class="gallery-card fade-up">
+        <div class="gallery-word">official</div>
+        <div class="gallery-gloss">of an office</div>
+      </div>
+      <div class="gallery-card fade-up">
+        <div class="gallery-word">celestial</div>
+        <div class="gallery-gloss">of the heavens</div>
+      </div>
+      <div class="gallery-card fade-up">
+        <div class="gallery-word">editorial</div>
+        <div class="gallery-gloss">of an editor</div>
+      </div>
+      <div class="gallery-card fade-up">
+        <div class="gallery-word">memorial</div>
+        <div class="gallery-gloss">of memory</div>
+      </div>
+      <div class="gallery-card fade-up">
+        <div class="gallery-word">imperial</div>
+        <div class="gallery-gloss">of an empire</div>
+      </div>
+      <div class="gallery-card fade-up">
+        <div class="gallery-word">cordial</div>
+        <div class="gallery-gloss">of the heart</div>
+      </div>
+      <div class="gallery-card fade-up">
+        <div class="gallery-word">aerial</div>
+        <div class="gallery-gloss">of the air</div>
+      </div>
+      <div class="gallery-card fade-up">
+        <div class="gallery-word">jovial</div>
+        <div class="gallery-gloss">of Jove / Jupiter</div>
+      </div>
+      <div class="gallery-card fade-up">
+        <div class="gallery-word">remedial</div>
+        <div class="gallery-gloss">of a remedy</div>
+      </div>
+      <div class="gallery-card fade-up">
+        <div class="gallery-word">potential</div>
+        <div class="gallery-gloss">of power / capacity</div>
+      </div>
+      <div class="gallery-card fade-up">
+        <div class="gallery-word">material</div>
+        <div class="gallery-gloss">of matter</div>
+      </div>
+      <div class="gallery-card fade-up">
+        <div class="gallery-word">trivial</div>
+        <div class="gallery-gloss">of the crossroads</div>
+      </div>
+      <div class="gallery-card fade-up">
+        <div class="gallery-word">serial</div>
+        <div class="gallery-gloss">of a series</div>
+      </div>
+      <div class="gallery-card fade-up">
+        <div class="gallery-word">radial</div>
+        <div class="gallery-gloss">of a radius</div>
+      </div>
+      <div class="gallery-card fade-up">
+        <div class="gallery-word">commercial</div>
+        <div class="gallery-gloss">of commerce</div>
+      </div>
+      <div class="gallery-card fade-up">
+        <div class="gallery-word">credential</div>
+        <div class="gallery-gloss">of belief / trust</div>
+      </div>
+      <div class="gallery-card fade-up">
+        <div class="gallery-word">sequential</div>
+        <div class="gallery-gloss">of a sequence</div>
+      </div>
+      <div class="gallery-card fade-up">
+        <div class="gallery-word">industrial</div>
+        <div class="gallery-gloss">of industry</div>
+      </div>
+      <div class="gallery-card fade-up">
+        <div class="gallery-word">beneficial</div>
+        <div class="gallery-gloss">of benefit</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══════════════════════════════
+       CODEX BOX
+  ═══════════════════════════════ -->
+  <section class="codex-section">
+    <div class="codex-box fade-up">
+      <div class="codex-header">// Lexical Profile · ial.kr · I01–I05</div>
+
+      <div class="codex-row">
+        <span class="codex-key">suffix</span>
+        <span class="codex-val"><em>-ial</em> — adjectival suffix; variant of <em>-al</em> with connective <em>-i-</em>; also appears as <em>-tial</em>, <em>-cial</em>, <em>-ntial</em></span>
+      </div>
+      <div class="codex-row">
+        <span class="codex-key">origin</span>
+        <span class="codex-val">Latin <em>-iālis</em> (← <em>-ālis</em> + stem-vowel <em>-i-</em>) → Old French <em>-iel / -ial</em> → Middle English <em>-ial</em></span>
+      </div>
+      <div class="codex-row">
+        <span class="codex-key">function</span>
+        <span class="codex-val">Forms <em>adjectives</em> from nouns meaning "of, relating to, pertaining to, or having the character of" the base noun</span>
+      </div>
+      <div class="codex-row">
+        <span class="codex-key">register</span>
+        <span class="codex-val"><em>Formal / Latinate</em> — dominant in law, science, politics, theology, philosophy, and academic prose</span>
+      </div>
+      <div class="codex-row">
+        <span class="codex-key">productivity</span>
+        <span class="codex-val"><em>High</em> — over 500 adjectives in English; variants include <em>-tial</em> (essential), <em>-ntial</em> (potential), <em>-cial</em> (official, commercial)</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══════════════════════════════
+       SUFFIX QUINTET
+  ═══════════════════════════════ -->
+  <section class="quintet-section">
+    <p class="section-label" style="text-align:center;">§ 05 · Suffix Series</p>
+    <h2 class="section-title" style="font-size:clamp(24px,3.8vw,44px);margin-bottom:0.5rem;">The Language Quintet</h2>
+    <p class="section-subtitle">Five companion domains mapping the Latin-origin suffix landscape of English.</p>
+
+    <div class="quintet-grid">
+      <div class="quintet-card fade-up">
+        <div class="quintet-suffix">-ous</div>
+        <div class="quintet-pos">adjective</div>
+        <div class="quintet-meaning">full of / having the quality</div>
+        <div class="quintet-example">glorious, precious</div>
+        <div class="quintet-domain">ous.kr</div>
+      </div>
+      <div class="quintet-card fade-up">
+        <div class="quintet-suffix">-ize</div>
+        <div class="quintet-pos">verb</div>
+        <div class="quintet-meaning">to make / to subject to</div>
+        <div class="quintet-example">organize, realize</div>
+        <div class="quintet-domain">ize.kr</div>
+      </div>
+      <div class="quintet-card fade-up">
+        <div class="quintet-suffix">-ive</div>
+        <div class="quintet-pos">adjective</div>
+        <div class="quintet-meaning">tending to / of the nature of</div>
+        <div class="quintet-example">creative, intensive</div>
+        <div class="quintet-domain">ive.kr</div>
+      </div>
+      <div class="quintet-card fade-up">
+        <div class="quintet-suffix">-ity</div>
+        <div class="quintet-pos">noun</div>
+        <div class="quintet-meaning">state / quality / condition</div>
+        <div class="quintet-example">clarity, reality</div>
+        <div class="quintet-domain">ity.kr</div>
+      </div>
+      <div class="quintet-card fade-up">
+        <div class="quintet-suffix">-ify</div>
+        <div class="quintet-pos">verb</div>
+        <div class="quintet-meaning">to make / to cause to become</div>
+        <div class="quintet-example">clarify, amplify</div>
+        <div class="quintet-domain">ify.kr</div>
+      </div>
+    </div>
+
+    <!-- Second row: -ial as the new entry -->
+    <div style="display:flex;justify-content:center;margin-top:1.1rem;">
+      <div class="quintet-card active fade-up" style="min-width:180px;max-width:220px;">
+        <div class="quintet-suffix">-ial</div>
+        <div class="quintet-pos">adjective</div>
+        <div class="quintet-meaning">of / relating to / pertaining to</div>
+        <div class="quintet-example">celestial, official</div>
+        <div class="quintet-domain">ial.kr · current</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══════════════════════════════
+       ORIGIN NARRATIVE
+  ═══════════════════════════════ -->
+  <section class="origin-section">
+    <div class="origin-glyph fade-up">屬</div>
+    <h2 class="origin-title fade-up">
+      The Adjective That<br/>Declares Belonging
+    </h2>
+    <p class="origin-body fade-up">
+      There is a difference between saying a thing <em style="color:#9aa4ff;">is</em> something and saying it
+      <em style="color:#c0c8ff;">pertains to</em> something. The suffix -ial occupies that precise distinction.
+      When Roman administrators wrote <em style="color:#9aa4ff;">imperialis</em>, they were not saying the edict
+      <em>was</em> an empire — they were declaring it <em style="color:#c0c8ff;">of the empire</em>, bearing its
+      authority, its weight, its character. When we say <em style="color:#9aa4ff;">celestial</em>, we do not claim
+      the music <em>is</em> the sky — we declare it partakes of the sky's nature, as if the heavens had lent
+      it something of themselves. This is the ancient power carried in -iālis from Latin, through French, into
+      English: the power to name not what a thing <em>is</em>, but what it fundamentally
+      <em style="color:#eacb68;">belongs to</em>.
+    </p>
+    <a href="#contact" class="hero-cta fade-up">
+      Inquire about ial.kr ✦
+    </a>
+  </section>
+
+  <!-- ═══════════════════════════════
+       CONTACT
+  ═══════════════════════════════ -->
+  <section class="contact-section" id="contact">
+    <h2 class="contact-title fade-up">Establish the Relation</h2>
+    <p class="contact-sub fade-up">
+      Interested in ial.kr? Domain inquiries,<br/>collaborations, and language projects welcome.
+    </p>
+    <a href="mailto:hello@ial.kr" class="contact-email fade-up">
+      ✦ hello@ial.kr
+    </a>
+  </section>
+
+  <!-- ═══════════════════════════════
+       FOOTER
+  ═══════════════════════════════ -->
+  <footer class="site-footer">
+    © 2026 ial.kr · The Suffix of Relation · -iālis → -iel/-ial → -ial
+  </footer>
+
+
+  <!-- ═══════════════════════════════
+       PARTICLE SYSTEM
+  ═══════════════════════════════ -->
+  <script>
+  (function () {
+    'use strict';
+
+    const canvas = document.getElementById('ial-canvas');
+    const ctx    = canvas.getContext('2d');
+
+    /* ── Palette ── */
+    const CELESTIAL = '#3a28d4';
+    const INDIGO    = '#6e78f5';
+    const IMPERIAL  = '#c8a840';
+    const MIST      = '#b8c8e0';
+    const PALE      = 'rgba(192,200,255,0.75)';
+
+    let W, H;
+    function resize() {
+      W = canvas.width  = window.innerWidth;
+      H = canvas.height = window.innerHeight;
+    }
+    resize();
+    window.addEventListener('resize', resize);
+
+    /* ════════════════════════════════
+       Layer 1 · StarPoint
+       Slowly drifting star points
+    ════════════════════════════════ */
+    class StarPoint {
+      constructor() { this.reset(true); }
+      reset(init) {
+        this.x      = Math.random() * W;
+        this.y      = init ? Math.random() * H : H + 10;
+        this.vx     = (Math.random() - 0.5) * 0.22;
+        this.vy     = -(0.10 + Math.random() * 0.22);
+        this.r      = 0.8 + Math.random() * 2.2;
+        this.alpha  = 0;
+        this.peak   = 0.30 + Math.random() * 0.45;
+        this.twinkle= Math.random() * Math.PI * 2;
+        this.tSpeed = 0.025 + Math.random() * 0.035;
+        const C     = [INDIGO, CELESTIAL, IMPERIAL, MIST, '#fff'];
+        this.col    = C[Math.floor(Math.random() * C.length)];
+        this.lifeMax= 220 + Math.random() * 160;
+        this.life   = init ? Math.random() * this.lifeMax : 0;
+      }
+      update() {
+        this.life++;
+        this.x += this.vx;
+        this.y += this.vy;
+        this.twinkle += this.tSpeed;
+        const t = this.life / this.lifeMax;
+        const tw = 0.85 + Math.sin(this.twinkle) * 0.15;
+        if (t < 0.12)      this.alpha = (t / 0.12) * this.peak * tw;
+        else if (t < 0.75) this.alpha = this.peak * tw;
+        else               this.alpha = this.peak * tw * (1 - (t - 0.75) / 0.25);
+        if (this.life >= this.lifeMax || this.y < -12) this.reset(false);
+      }
+      draw() {
+        if (this.alpha <= 0) return;
+        ctx.save();
+        ctx.globalAlpha = this.alpha;
+        /* 4-pointed star cross */
+        ctx.strokeStyle = this.col;
+        ctx.lineWidth   = this.r * 0.7;
+        ctx.lineCap     = 'round';
+        const s = this.r * 2.8;
+        ctx.beginPath();
+        ctx.moveTo(this.x - s, this.y);
+        ctx.lineTo(this.x + s, this.y);
+        ctx.stroke();
+        ctx.beginPath();
+        ctx.moveTo(this.x, this.y - s);
+        ctx.lineTo(this.x, this.y + s);
+        ctx.stroke();
+        /* core dot */
+        ctx.fillStyle = '#fff';
+        ctx.globalAlpha = this.alpha * 0.90;
+        ctx.beginPath();
+        ctx.arc(this.x, this.y, this.r * 0.55, 0, Math.PI * 2);
+        ctx.fill();
+        ctx.restore();
+      }
+    }
+
+    /* ════════════════════════════════
+       Layer 2 · RelationWord
+       Floating -ial adjectives
+    ════════════════════════════════ */
+    const IAL_WORDS = [
+      'essential','official','celestial','editorial','memorial',
+      'imperial','cordial','aerial','jovial','remedial',
+      'potential','material','trivial','serial','radial',
+      'commercial','credential','sequential','industrial','beneficial',
+      'primordial','territorial','controversial','presidential','judicial',
+      'managerial','ministerial','custodial','ceremonial','atorial'
+    ];
+    class RelationWord {
+      constructor() { this.reset(true); }
+      reset(init) {
+        this.x    = Math.random() * W;
+        this.y    = init ? Math.random() * H : H + 28;
+        this.vy   = -(0.14 + Math.random() * 0.24);
+        this.vx   = (Math.random() - 0.5) * 0.16;
+        this.word = IAL_WORDS[Math.floor(Math.random() * IAL_WORDS.length)];
+        this.size = 10 + Math.random() * 5;
+        this.alpha= 0;
+        this.peak = 0.11 + Math.random() * 0.12;
+        const C   = [INDIGO, IMPERIAL, PALE, '#dde2ff'];
+        this.col  = C[Math.floor(Math.random() * C.length)];
+      }
+      update() {
+        this.x += this.vx; this.y += this.vy;
+        this.alpha = Math.min(this.alpha + 0.004, this.peak);
+        if (this.y < -40) this.reset(false);
+      }
+      draw() {
+        ctx.save();
+        ctx.globalAlpha = this.alpha;
+        ctx.fillStyle   = this.col;
+        ctx.font        = `italic ${this.size}px "Playfair Display", Georgia, serif`;
+        ctx.fillText(this.word, this.x, this.y);
+        ctx.restore();
+      }
+    }
+
+    /* ════════════════════════════════
+       Layer 3 · MistSpeck
+       Ambient celestial specks
+    ════════════════════════════════ */
+    class MistSpeck {
+      constructor() { this.reset(true); }
+      reset(init) {
+        this.x    = Math.random() * W;
+        this.y    = init ? Math.random() * H : H + 6;
+        this.vy   = -(0.08 + Math.random() * 0.18);
+        this.vx   = (Math.random() - 0.5) * 0.14;
+        this.r    = 0.7 + Math.random() * 2;
+        this.alpha= 0;
+        this.peak = 0.16 + Math.random() * 0.28;
+        const C   = [CELESTIAL, INDIGO, IMPERIAL, MIST, '#6040e8'];
+        this.col  = C[Math.floor(Math.random() * C.length)];
+      }
+      update() {
+        this.x += this.vx; this.y += this.vy;
+        this.alpha = Math.min(this.alpha + 0.007, this.peak);
+        if (this.y < -8) this.reset(false);
+      }
+      draw() {
+        ctx.save();
+        ctx.globalAlpha = this.alpha;
+        ctx.fillStyle   = this.col;
+        ctx.beginPath();
+        ctx.arc(this.x, this.y, this.r, 0, Math.PI * 2);
+        ctx.fill();
+        ctx.restore();
+      }
+    }
+
+    /* ════════════════════════════════
+       Layer 4 · OrbitalRing
+       Slow concentric orbital rings
+    ════════════════════════════════ */
+    class OrbitalRing {
+      constructor() { this.reset(true); }
+      reset(init) {
+        this.cx   = Math.random() * W;
+        this.cy   = Math.random() * H;
+        this.r    = 14 + Math.random() * 35;
+        this.maxR = this.r + 45 + Math.random() * 55;
+        this.dr   = 0.18 + Math.random() * 0.28;
+        this.baseA= 0.14 + Math.random() * 0.12;
+        const C   = [CELESTIAL, INDIGO, IMPERIAL];
+        this.col  = C[Math.floor(Math.random() * C.length)];
+        if (init) this.r = Math.random() * this.maxR;
+      }
+      update() {
+        this.r += this.dr;
+        if (this.r > this.maxR) this.reset(false);
+      }
+      draw() {
+        const life = 1 - (this.r - 14) / (this.maxR - 14);
+        ctx.save();
+        ctx.globalAlpha = this.baseA * life;
+        ctx.strokeStyle = this.col;
+        ctx.lineWidth   = 1;
+        ctx.beginPath();
+        ctx.arc(this.cx, this.cy, this.r, 0, Math.PI * 2);
+        ctx.stroke();
+        ctx.restore();
+      }
+    }
+
+    /* ── Pools ── */
+    const stars   = Array.from({ length: 60 }, () => new StarPoint());
+    const words   = Array.from({ length: 24 }, () => new RelationWord());
+    const specks  = Array.from({ length: 55 }, () => new MistSpeck());
+    const rings   = Array.from({ length: 10 }, () => new OrbitalRing());
+
+    /* ── Loop ── */
+    function loop() {
+      ctx.clearRect(0, 0, W, H);
+      rings.forEach(p  => { p.update(); p.draw(); });
+      specks.forEach(p => { p.update(); p.draw(); });
+      words.forEach(p  => { p.update(); p.draw(); });
+      stars.forEach(p  => { p.update(); p.draw(); });
+      requestAnimationFrame(loop);
+    }
+    loop();
+
+    /* ── Scroll fade-up ── */
+    const observer = new IntersectionObserver(entries => {
+      entries.forEach(e => {
+        if (e.isIntersecting) {
+          e.target.classList.add('visible');
+          observer.unobserve(e.target);
+        }
+      });
+    }, { threshold: 0.12 });
+
+    document.querySelectorAll('.fade-up').forEach(el => observer.observe(el));
+
+  })();
+  </script>
+
+</body>
+</html>
