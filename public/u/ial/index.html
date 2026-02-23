@@ -1,0 +1,1193 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1.0"/>
+<title>‑ial — ial.kr</title>
+<script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+<link rel="preconnect" href="https://fonts.googleapis.com"/>
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+<link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=Inter:wght@300;400;500;600;700&family=Noto+Serif+KR:wght@300;400;500;600;700&display=swap" rel="stylesheet"/>
+<style>
+  @theme {
+    --color-void-950: #020306;
+    --color-void-900: #050910;
+    --color-void-800: #0b1422;
+    --color-sapphire-300: #93c5fd;
+    --color-sapphire-400: #60a5fa;
+    --color-sapphire-500: #3b82f6;
+    --color-sapphire-600: #2563eb;
+    --color-cyan-300:  #67e8f9;
+    --color-cyan-400:  #22d3ee;
+    --color-cyan-500:  #06b6d4;
+    --color-gold-300:  #fde68a;
+    --color-gold-400:  #fbbf24;
+    --color-rose-300:  #fda4af;
+    --color-rose-400:  #fb7185;
+    --color-mint-300:  #6ee7b7;
+    --color-mint-400:  #34d399;
+    --font-display: 'DM Serif Display', serif;
+    --font-body:    'Inter', sans-serif;
+    --font-korean:  'Noto Serif KR', serif;
+  }
+
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  html { scroll-behavior: smooth; }
+
+  body {
+    font-family: var(--font-body);
+    background: #020306;
+    color: #dde8f8;
+    min-height: 100vh;
+    overflow-x: hidden;
+  }
+
+  /* ── Crystal Background ── */
+  .crystal-bg {
+    position: fixed; inset: 0; z-index: 0; pointer-events: none;
+    background:
+      radial-gradient(ellipse 80% 55% at 18% 12%, rgba(96,165,250,0.15) 0%, transparent 60%),
+      radial-gradient(ellipse 65% 45% at 84% 80%, rgba(34,211,238,0.11) 0%, transparent 55%),
+      radial-gradient(ellipse 50% 60% at 50% 45%, rgba(251,191,36,0.06) 0%, transparent 60%),
+      #020306;
+  }
+
+  /* ── Top Stripe ── */
+  .top-stripe {
+    position: fixed; top: 0; left: 0; right: 0; height: 3px; z-index: 100;
+    background: linear-gradient(90deg,#60a5fa,#22d3ee,#fbbf24,#fb7185,#34d399,#60a5fa);
+    background-size: 300% 100%;
+    animation: stripe-flow 5s linear infinite;
+  }
+  @keyframes stripe-flow { 0%{background-position:0% 50%} 100%{background-position:300% 50%} }
+
+  /* ── Prism Grid ── */
+  .prism-grid {
+    position: fixed; inset: 0; z-index: 0; pointer-events: none; opacity: 0.028;
+    background-image:
+      linear-gradient(rgba(96,165,250,0.6) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(96,165,250,0.6) 1px, transparent 1px);
+    background-size: 36px 36px;
+  }
+
+  /* ── Vignette ── */
+  .vignette {
+    position: fixed; inset: 0; z-index: 0; pointer-events: none;
+    background: radial-gradient(ellipse 92% 92% at 50% 50%, transparent 45%, rgba(2,3,6,0.72) 100%);
+  }
+
+  /* ── Particles ── */
+  #particles { position: fixed; inset: 0; z-index: 1; pointer-events: none; overflow: hidden; }
+  .particle {
+    position: absolute; opacity: 0; pointer-events: none; user-select: none;
+    animation: ptl-float linear infinite;
+  }
+  @keyframes ptl-float {
+    0%   { transform: translateY(100vh) rotate(0deg);   opacity: 0; }
+    10%  { opacity: 0.55; }
+    90%  { opacity: 0.25; }
+    100% { transform: translateY(-60px) rotate(540deg); opacity: 0; }
+  }
+
+  /* ── Corner SVG ── */
+  .corner-decor { position: fixed; z-index: 1; pointer-events: none; opacity: 0.13; }
+  .corner-decor.tl { top: 10px; left: 10px; }
+  .corner-decor.tr { top: 10px; right: 10px; transform: scaleX(-1); }
+  .corner-decor.bl { bottom: 10px; left: 10px; transform: scaleY(-1); }
+  .corner-decor.br { bottom: 10px; right: 10px; transform: scale(-1); }
+
+  /* ── Layout ── */
+  .main { position: relative; z-index: 10; max-width: 480px; margin: 0 auto; padding: 64px 16px 80px; }
+
+  /* ── Section Card ── */
+  .section-card {
+    background: rgba(11,20,34,0.78);
+    border: 1px solid rgba(96,165,250,0.14);
+    border-radius: 20px;
+    padding: 28px 24px;
+    margin-bottom: 20px;
+    backdrop-filter: blur(14px);
+    transition: border-color 0.3s, transform 0.3s, box-shadow 0.3s;
+  }
+  .section-card:hover {
+    border-color: rgba(96,165,250,0.32);
+    transform: translateY(-2px);
+    box-shadow: 0 14px 44px rgba(60,130,250,0.12);
+  }
+
+  /* ── Reveal ── */
+  .reveal { opacity: 0; transform: translateY(26px); transition: opacity 0.65s ease, transform 0.65s ease; }
+  .reveal.visible { opacity: 1; transform: translateY(0); }
+
+  /* ── Avatar Ring ── */
+  .avatar-ring {
+    width: 112px; height: 112px; border-radius: 50%; padding: 3px;
+    background: conic-gradient(#60a5fa,#22d3ee,#fbbf24,#fb7185,#34d399,#60a5fa);
+    animation: ring-spin 9s linear infinite; display: inline-block;
+  }
+  @keyframes ring-spin { to { transform: rotate(360deg); } }
+  .avatar-inner {
+    width: 100%; height: 100%; border-radius: 50%; overflow: hidden;
+    background: #0b1422; border: 2px solid #020306;
+  }
+  .status-dot {
+    width: 14px; height: 14px; border-radius: 50%;
+    background: #22d3ee; border: 2px solid #020306;
+    animation: pulse-dot 2.2s ease-in-out infinite;
+  }
+  @keyframes pulse-dot {
+    0%,100%{ box-shadow:0 0 0 0 rgba(34,211,238,0.75); }
+    50%    { box-shadow:0 0 0 6px rgba(34,211,238,0); }
+  }
+
+  /* ── Shimmer Title ── */
+  .shimmer-title {
+    font-family: var(--font-display);
+    background: linear-gradient(90deg,#60a5fa 0%,#22d3ee 28%,#fbbf24 52%,#fb7185 76%,#60a5fa 100%);
+    background-size: 260% auto;
+    -webkit-background-clip: text; background-clip: text; color: transparent;
+    animation: shimmer-move 4.5s linear infinite;
+  }
+  @keyframes shimmer-move { to { background-position: -260% center; } }
+
+  /* ── Tags ── */
+  .tag {
+    display: inline-block; padding: 3px 10px; border-radius: 20px;
+    font-size: 11px; font-weight: 600; border: 1px solid; cursor: default;
+  }
+
+  /* ── Letter Cards ── */
+  .letter-card {
+    flex: 1; padding: 10px 6px; border-radius: 12px; text-align: center;
+    border: 1px solid rgba(255,255,255,0.09);
+    background: rgba(255,255,255,0.04);
+    transition: transform 0.2s, box-shadow 0.2s;
+  }
+  .letter-card:hover { transform: translateY(-3px); box-shadow: 0 6px 22px rgba(0,0,0,0.3); }
+
+  /* ── Prestige Meter ── */
+  .prestige-seg {
+    width: 16px; height: 10px; border-radius: 2px;
+    background: rgba(255,255,255,0.07);
+    border: 1px solid rgba(255,255,255,0.09);
+    transition: background 0.3s, box-shadow 0.3s;
+  }
+  .prestige-seg.lit { background: #60a5fa; box-shadow: 0 0 6px rgba(96,165,250,0.80); }
+
+  /* ── Trait Bar ── */
+  .trait-bar-bg { height: 7px; border-radius: 4px; background: rgba(255,255,255,0.08); overflow: hidden; }
+  .trait-bar-fill {
+    height: 100%; border-radius: 4px; width: 0%;
+    background: linear-gradient(90deg,#60a5fa,#22d3ee);
+    transition: width 1.3s cubic-bezier(0.22,1,0.36,1);
+  }
+
+  /* ── Social Btn ── */
+  .social-btn {
+    display: flex; align-items: center; gap: 12px;
+    padding: 13px 18px; border-radius: 14px; width: 100%;
+    border: 1px solid rgba(96,165,250,0.18);
+    background: rgba(255,255,255,0.04);
+    color: #dde8f8; font-size: 14px; font-weight: 500;
+    text-decoration: none; cursor: pointer; transition: all 0.25s;
+  }
+  .social-btn:hover {
+    background: rgba(96,165,250,0.10);
+    border-color: rgba(96,165,250,0.44);
+    transform: translateX(4px);
+  }
+
+  /* ── Word Pill ── */
+  .word-pill {
+    display: inline-flex; align-items: center; gap: 5px;
+    padding: 6px 14px; border-radius: 30px; font-size: 13px; font-weight: 600;
+    border: 1px solid rgba(96,165,250,0.22);
+    background: rgba(96,165,250,0.07);
+    color: #93c5fd; cursor: default; transition: all 0.2s;
+  }
+  .word-pill:hover {
+    background: rgba(96,165,250,0.18);
+    border-color: rgba(96,165,250,0.48);
+    transform: scale(1.05);
+  }
+
+  /* ── Carousel ── */
+  .carousel-track { display: flex; transition: transform 0.55s cubic-bezier(0.22,1,0.36,1); }
+  .carousel-slide { min-width: 100%; border-radius: 14px; overflow: hidden; }
+  .carousel-slide img { width: 100%; height: 220px; object-fit: cover; display: block; }
+  .carousel-dot {
+    width: 8px; height: 8px; border-radius: 50%;
+    background: rgba(255,255,255,0.22); border: none; cursor: pointer;
+    transition: background 0.3s, transform 0.3s;
+  }
+  .carousel-dot.active { background: #60a5fa; transform: scale(1.4); }
+
+  /* ── Code Block ── */
+  .code-block {
+    background: rgba(2,3,6,0.88); border: 1px solid rgba(96,165,250,0.14);
+    border-radius: 12px; padding: 16px; font-family: monospace; font-size: 12px;
+    line-height: 1.85; color: #b8cce8; overflow-x: auto;
+  }
+  .ck { color: #60a5fa; }
+  .cs { color: #67e8f9; }
+  .cc { color: #334d70; font-style: italic; }
+  .cf { color: #fbbf24; }
+  .cn { color: #fb7185; }
+
+  /* ── Music Player ── */
+  .vinyl {
+    width: 90px; height: 90px; border-radius: 50%;
+    background: conic-gradient(#0b1422 0deg,#152338 60deg,#0b1422 120deg,#1c2f4a 180deg,#0b1422 240deg,#152338 300deg,#0b1422 360deg);
+    display: flex; align-items: center; justify-content: center;
+    animation: vinyl-spin 4s linear infinite; animation-play-state: paused;
+    box-shadow: 0 0 0 3px #60a5fa, 0 0 22px rgba(96,165,250,0.38);
+  }
+  .vinyl.playing { animation-play-state: running; }
+  @keyframes vinyl-spin { to { transform: rotate(360deg); } }
+  .vinyl-center {
+    width: 28px; height: 28px; border-radius: 50%;
+    background: radial-gradient(circle, #dde8f8 40%, #60a5fa 100%);
+    border: 2px solid #020306;
+  }
+  .track-item {
+    display: flex; align-items: center; gap: 10px; padding: 8px 10px;
+    border-radius: 10px; cursor: pointer; transition: background 0.2s;
+  }
+  .track-item:hover  { background: rgba(96,165,250,0.07); }
+  .track-item.active { background: rgba(96,165,250,0.14); }
+  .progress-bar-bg {
+    height: 4px; border-radius: 2px; background: rgba(255,255,255,0.10); cursor: pointer; overflow: hidden;
+  }
+  .progress-bar-fill { height: 100%; border-radius: 2px; background: #60a5fa; width: 0%; transition: width 0.3s; }
+
+  /* ── FAQ ── */
+  details.faq-item { border-radius: 12px; overflow: hidden; border: 1px solid rgba(96,165,250,0.15); }
+  details.faq-item summary {
+    padding: 14px 16px; cursor: pointer; font-weight: 600; font-size: 14px;
+    list-style: none; display: flex; align-items: center; justify-content: space-between;
+    background: rgba(255,255,255,0.03); transition: background 0.2s;
+  }
+  details.faq-item summary:hover { background: rgba(96,165,250,0.07); }
+  details.faq-item summary::after { content:'＋'; font-size:18px; color:#60a5fa; transition:transform 0.3s; }
+  details.faq-item[open] summary::after { transform: rotate(45deg); }
+  details.faq-item .faq-body { padding: 14px 16px; font-size: 13px; color: #7a9ec4; line-height: 1.75; background: rgba(255,255,255,0.015); }
+
+  /* ── Form ── */
+  .form-input {
+    width: 100%; background: rgba(255,255,255,0.05); border: 1px solid rgba(96,165,250,0.18);
+    border-radius: 10px; padding: 11px 14px; color: #dde8f8; font-size: 13px; outline: none;
+    transition: border-color 0.25s, box-shadow 0.25s; font-family: var(--font-body);
+  }
+  .form-input::placeholder { color: rgba(255,255,255,0.22); }
+  .form-input:focus { border-color: #60a5fa; box-shadow: 0 0 0 3px rgba(96,165,250,0.15); }
+  .form-btn {
+    width: 100%; padding: 13px; border-radius: 12px; border: none; cursor: pointer;
+    font-size: 14px; font-weight: 700; font-family: var(--font-body);
+    background: linear-gradient(135deg,#3b82f6,#22d3ee);
+    color: #020306; transition: opacity 0.2s, transform 0.2s;
+  }
+  .form-btn:hover { opacity: 0.88; transform: translateY(-1px); }
+
+  /* ── Etymology Line ── */
+  .etym-line {
+    display: flex; align-items: flex-start; gap: 14px; padding: 12px 0;
+    border-bottom: 1px solid rgba(96,165,250,0.07);
+  }
+  .etym-line:last-child { border-bottom: none; }
+  .etym-dot { width: 12px; height: 12px; border-radius: 50%; margin-top: 4px; flex-shrink: 0; box-shadow: 0 0 8px currentColor; }
+
+  /* ── Prestige Badge ── */
+  .prestige-badge {
+    display: inline-flex; align-items: center; gap: 6px;
+    padding: 5px 12px; border-radius: 20px; font-size: 12px; font-weight: 700;
+    background: linear-gradient(135deg,rgba(96,165,250,0.15),rgba(34,211,238,0.10));
+    border: 1px solid rgba(96,165,250,0.30);
+    color: #93c5fd;
+  }
+
+  /* ── Scroll to Top ── */
+  #scrollTop {
+    position: fixed; bottom: 28px; right: 20px; z-index: 200;
+    width: 42px; height: 42px; border-radius: 50%;
+    border: 1px solid rgba(96,165,250,0.40);
+    background: rgba(11,20,34,0.92); color: #60a5fa; font-size: 18px;
+    display: flex; align-items: center; justify-content: center; cursor: pointer;
+    opacity: 0; pointer-events: none; transition: opacity 0.3s, transform 0.3s;
+    backdrop-filter: blur(8px);
+  }
+  #scrollTop.show { opacity: 1; pointer-events: auto; }
+  #scrollTop:hover { transform: translateY(-3px); }
+
+  @media (max-width: 480px) {
+    .main { padding: 54px 10px 72px; }
+    .section-card { padding: 22px 16px; }
+  }
+</style>
+</head>
+<body>
+
+<div class="crystal-bg"></div>
+<div class="prism-grid"></div>
+<div class="vignette"></div>
+<div class="top-stripe"></div>
+<div id="particles"></div>
+
+<!-- Corner Decor -->
+<svg class="corner-decor tl" width="64" height="64" viewBox="0 0 64 64" fill="none">
+  <path d="M6 58 L6 6 L58 6" stroke="#60a5fa" stroke-width="2" fill="none"/>
+  <circle cx="6" cy="6" r="3" fill="#60a5fa"/>
+  <text x="12" y="26" font-size="11" fill="#60a5fa" font-family="serif" opacity="0.75">‑ial</text>
+</svg>
+<svg class="corner-decor tr" width="64" height="64" viewBox="0 0 64 64" fill="none">
+  <path d="M6 58 L6 6 L58 6" stroke="#22d3ee" stroke-width="2" fill="none"/>
+  <circle cx="6" cy="6" r="3" fill="#22d3ee"/>
+  <text x="12" y="26" font-size="11" fill="#22d3ee" font-family="serif" opacity="0.75">→</text>
+</svg>
+<svg class="corner-decor bl" width="64" height="64" viewBox="0 0 64 64" fill="none">
+  <path d="M6 58 L6 6 L58 6" stroke="#fbbf24" stroke-width="2" fill="none"/>
+  <circle cx="6" cy="6" r="3" fill="#fbbf24"/>
+</svg>
+<svg class="corner-decor br" width="64" height="64" viewBox="0 0 64 64" fill="none">
+  <path d="M6 58 L6 6 L58 6" stroke="#fb7185" stroke-width="2" fill="none"/>
+  <circle cx="6" cy="6" r="3" fill="#fb7185"/>
+</svg>
+
+<button id="scrollTop" onclick="window.scrollTo({top:0,behavior:'smooth'})" aria-label="맨 위로">↑</button>
+
+<main class="main">
+
+  <!-- ① HERO -->
+  <section class="section-card reveal" id="hero">
+    <div style="display:flex;flex-direction:column;align-items:center;text-align:center;gap:16px;">
+
+      <div style="position:relative;">
+        <div class="avatar-ring">
+          <div class="avatar-inner">
+            <img src="https://api.dicebear.com/9.x/shapes/svg?seed=ial&backgroundColor=60a5fa,22d3ee,fbbf24&backgroundType=gradientLinear"
+                 width="112" height="112" alt="ial avatar" style="width:100%;height:100%;object-fit:cover;"/>
+          </div>
+        </div>
+        <span class="status-dot" style="position:absolute;bottom:5px;right:5px;"></span>
+      </div>
+
+      <div style="font-size:11px;color:#22d3ee;letter-spacing:4px;font-weight:700;">ENGLISH SUFFIX</div>
+
+      <div>
+        <h1 class="shimmer-title" style="font-size:62px;font-weight:400;line-height:1;letter-spacing:2px;">‑ial</h1>
+        <p style="font-size:14px;color:#93c5fd;margin-top:6px;font-family:var(--font-korean);">ial.kr · 품격의 언어</p>
+      </div>
+
+      <!-- Prestige Badges -->
+      <div style="display:flex;flex-wrap:wrap;gap:6px;justify-content:center;">
+        <span class="prestige-badge">✦ suffix</span>
+        <span class="prestige-badge" style="color:#67e8f9;border-color:rgba(103,232,249,0.30);">adjective</span>
+        <span class="prestige-badge" style="color:#fde68a;border-color:rgba(253,230,138,0.30);">Latin ‑ialis</span>
+        <span class="prestige-badge" style="color:#fda4af;border-color:rgba(253,164,175,0.30);">‑al 변형</span>
+        <span class="prestige-badge" style="color:#6ee7b7;border-color:rgba(110,231,183,0.30);">formal</span>
+      </div>
+
+      <!-- Letter Cards -->
+      <div style="display:flex;gap:8px;width:100%;max-width:240px;">
+        <div class="letter-card">
+          <div style="font-size:24px;font-weight:400;color:#60a5fa;font-family:var(--font-display);">i</div>
+          <div style="font-size:9px;color:#334d70;margin-top:2px;">in</div>
+        </div>
+        <div class="letter-card">
+          <div style="font-size:24px;font-weight:400;color:#22d3ee;font-family:var(--font-display);">a</div>
+          <div style="font-size:9px;color:#334d70;margin-top:2px;">affirm</div>
+        </div>
+        <div class="letter-card">
+          <div style="font-size:24px;font-weight:400;color:#fbbf24;font-family:var(--font-display);">l</div>
+          <div style="font-size:9px;color:#334d70;margin-top:2px;">link</div>
+        </div>
+      </div>
+
+      <!-- Prestige Meter -->
+      <div style="width:100%;max-width:340px;">
+        <div style="display:flex;justify-content:space-between;font-size:11px;color:#334d70;margin-bottom:6px;">
+          <span>품격 지수 (Prestige Index)</span>
+          <span style="color:#60a5fa;" id="depthPct">0%</span>
+        </div>
+        <div style="display:flex;gap:3px;flex-wrap:wrap;" id="depthMeter"></div>
+      </div>
+
+      <!-- Core Meaning -->
+      <div style="background:rgba(96,165,250,0.07);border:1px solid rgba(96,165,250,0.20);border-radius:14px;padding:16px 18px;width:100%;text-align:left;">
+        <div style="font-size:11px;color:#22d3ee;letter-spacing:2px;font-weight:700;margin-bottom:8px;">CORE MEANING</div>
+        <div style="font-size:16px;font-weight:700;color:#dde8f8;margin-bottom:6px;">"~에 관한" · "~의 성질을 가진" (격식체)</div>
+        <div style="font-size:12px;color:#7a9ec4;line-height:1.7;">
+          <strong style="color:#60a5fa;">‑ial</strong>은 라틴어 <em style="color:#93c5fd;">‑ialis</em>에서 유래한 접미사로,<br/>
+          <strong style="color:#22d3ee;">‑al</strong>의 격식·학술적 변형입니다.<br/>
+          ① <strong style="color:#60a5fa;">형용사 형성</strong>: "~에 관한, ~의 성질을 가진"
+          <span style="color:#334d70;">(official, special, financial)</span><br/>
+          ② <strong style="color:#22d3ee;">고급 어휘</strong>: 법률·행정·학술 분야에서 특히 활발
+          <span style="color:#334d70;">(judicial, presidential, imperial)</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ② KPI BOARD -->
+  <section class="section-card reveal">
+    <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:10px;text-align:center;">
+      <div style="padding:14px 8px;border-radius:14px;background:rgba(96,165,250,0.08);border:1px solid rgba(96,165,250,0.16);">
+        <div style="font-size:22px;font-weight:800;color:#60a5fa;" class="count-up" data-target="4000">0</div>
+        <div style="font-size:10px;color:#334d70;margin-top:3px;">단어 이상</div>
+        <div style="font-size:9px;color:#22d3ee;">‑ial 파생어</div>
+      </div>
+      <div style="padding:14px 8px;border-radius:14px;background:rgba(34,211,238,0.08);border:1px solid rgba(34,211,238,0.16);">
+        <div style="font-size:22px;font-weight:800;color:#22d3ee;">2,000+</div>
+        <div style="font-size:10px;color:#334d70;margin-top:3px;">년의 역사</div>
+        <div style="font-size:9px;color:#fbbf24;">Latin 기원</div>
+      </div>
+      <div style="padding:14px 8px;border-radius:14px;background:rgba(251,191,36,0.08);border:1px solid rgba(251,191,36,0.16);">
+        <div style="font-size:22px;font-weight:800;color:#fbbf24;">∞</div>
+        <div style="font-size:10px;color:#334d70;margin-top:3px;">품격</div>
+        <div style="font-size:9px;color:#fb7185;">Prestige</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ③ ANNOUNCEMENT -->
+  <section class="section-card reveal" style="border-color:rgba(96,165,250,0.30);background:linear-gradient(135deg,rgba(96,165,250,0.09),rgba(34,211,238,0.05));">
+    <div style="display:flex;align-items:center;gap:12px;">
+      <span style="font-size:28px;">📢</span>
+      <div>
+        <div style="font-size:11px;color:#60a5fa;font-weight:700;letter-spacing:2px;margin-bottom:3px;">ANNOUNCEMENT</div>
+        <div style="font-size:14px;font-weight:700;color:#dde8f8;">『품격의 단어들』 시즌 6 오픈!</div>
+        <div style="font-size:12px;color:#7a9ec4;margin-top:4px;">‑ial 접미사로 완성되는 격식 어휘 85선 강의 시작.</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ④ SOCIAL LINKS -->
+  <section class="section-card reveal">
+    <h2 style="font-size:13px;font-weight:700;color:#22d3ee;letter-spacing:3px;margin-bottom:14px;">CONNECT</h2>
+    <div style="display:flex;flex-direction:column;gap:10px;">
+      <a href="https://instagram.com/ial.kr" target="_blank" rel="noopener" class="social-btn">
+        <span style="font-size:20px;">📸</span>
+        <div><div style="font-weight:700;">Instagram</div><div style="font-size:11px;color:#334d70;">@ial.kr</div></div>
+        <span style="margin-left:auto;color:#334d70;font-size:12px;">→</span>
+      </a>
+      <a href="https://youtube.com/@ial.kr" target="_blank" rel="noopener" class="social-btn">
+        <span style="font-size:20px;">▶️</span>
+        <div><div style="font-weight:700;">YouTube</div><div style="font-size:11px;color:#334d70;">@ial.kr</div></div>
+        <span style="margin-left:auto;color:#334d70;font-size:12px;">→</span>
+      </a>
+      <a href="https://x.com/ial_kr" target="_blank" rel="noopener" class="social-btn">
+        <span style="font-size:20px;">𝕏</span>
+        <div><div style="font-weight:700;">X / Twitter</div><div style="font-size:11px;color:#334d70;">@ial_kr</div></div>
+        <span style="margin-left:auto;color:#334d70;font-size:12px;">→</span>
+      </a>
+      <a href="https://github.com/ial-kr" target="_blank" rel="noopener" class="social-btn">
+        <span style="font-size:20px;">🐙</span>
+        <div><div style="font-weight:700;">GitHub</div><div style="font-size:11px;color:#334d70;">ial-kr</div></div>
+        <span style="margin-left:auto;color:#334d70;font-size:12px;">→</span>
+      </a>
+      <a href="mailto:hello@ial.kr" class="social-btn">
+        <span style="font-size:20px;">✉️</span>
+        <div><div style="font-weight:700;">Email</div><div style="font-size:11px;color:#334d70;">hello@ial.kr</div></div>
+        <span style="margin-left:auto;color:#334d70;font-size:12px;">→</span>
+      </a>
+    </div>
+  </section>
+
+  <!-- ⑤ WORD EXAMPLES -->
+  <section class="section-card reveal">
+    <h2 style="font-size:13px;font-weight:700;color:#60a5fa;letter-spacing:3px;margin-bottom:6px;">WORD EXAMPLES</h2>
+    <p style="font-size:12px;color:#334d70;margin-bottom:14px;">‑ial 접미사가 살아 숨쉬는 대표 단어들</p>
+    <div style="display:flex;flex-wrap:wrap;gap:8px;">
+      <span class="word-pill">⚖️ offic<strong style="color:#60a5fa;">ial</strong></span>
+      <span class="word-pill" style="color:#67e8f9;border-color:rgba(103,232,249,0.22);background:rgba(103,232,249,0.07);">✨ spec<strong style="color:#22d3ee;">ial</strong></span>
+      <span class="word-pill" style="color:#fde68a;border-color:rgba(253,230,138,0.22);background:rgba(253,230,138,0.07);">💰 financ<strong style="color:#fbbf24;">ial</strong></span>
+      <span class="word-pill" style="color:#fda4af;border-color:rgba(253,164,175,0.22);background:rgba(253,164,175,0.07);">👑 presid<strong style="color:#fb7185;">ential</strong></span>
+      <span class="word-pill" style="color:#6ee7b7;border-color:rgba(110,231,183,0.22);background:rgba(110,231,183,0.07);">🏛️ judic<strong style="color:#34d399;">ial</strong></span>
+      <span class="word-pill">🌊 essent<strong style="color:#60a5fa;">ial</strong></span>
+      <span class="word-pill" style="color:#67e8f9;border-color:rgba(103,232,249,0.22);background:rgba(103,232,249,0.07);">🏠 residenr<strong style="color:#22d3ee;">tial</strong></span>
+      <span class="word-pill" style="color:#fde68a;border-color:rgba(253,230,138,0.22);background:rgba(253,230,138,0.07);">👔 minist<strong style="color:#fbbf24;">erial</strong></span>
+      <span class="word-pill" style="color:#fda4af;border-color:rgba(253,164,175,0.22);background:rgba(253,164,175,0.07);">🌿 mater<strong style="color:#fb7185;">ial</strong></span>
+      <span class="word-pill" style="color:#6ee7b7;border-color:rgba(110,231,183,0.22);background:rgba(110,231,183,0.07);">⚜️ imper<strong style="color:#34d399;">ial</strong></span>
+      <span class="word-pill">🧠 potent<strong style="color:#60a5fa;">ial</strong></span>
+      <span class="word-pill" style="color:#67e8f9;border-color:rgba(103,232,249,0.22);background:rgba(103,232,249,0.07);">🤝 social</span>
+    </div>
+  </section>
+
+  <!-- ⑥ LINGUISTIC TRAITS -->
+  <section class="section-card reveal">
+    <h2 style="font-size:13px;font-weight:700;color:#93c5fd;letter-spacing:3px;margin-bottom:16px;">LINGUISTIC TRAITS</h2>
+    <div style="display:flex;flex-direction:column;gap:14px;">
+      <div>
+        <div style="display:flex;justify-content:space-between;font-size:13px;margin-bottom:5px;">
+          <span style="color:#dde8f8;">격식 표현력 (Formal Register)</span>
+          <span style="color:#60a5fa;">99%</span>
+        </div>
+        <div class="trait-bar-bg"><div class="trait-bar-fill" data-fill="99"></div></div>
+      </div>
+      <div>
+        <div style="display:flex;justify-content:space-between;font-size:13px;margin-bottom:5px;">
+          <span style="color:#dde8f8;">학술·법률 빈도 (Academic / Legal Use)</span>
+          <span style="color:#22d3ee;">97%</span>
+        </div>
+        <div class="trait-bar-bg"><div class="trait-bar-fill" data-fill="97" style="background:linear-gradient(90deg,#22d3ee,#fbbf24)"></div></div>
+      </div>
+      <div>
+        <div style="display:flex;justify-content:space-between;font-size:13px;margin-bottom:5px;">
+          <span style="color:#dde8f8;">역사적 지속성 (Historical Continuity)</span>
+          <span style="color:#fbbf24;">98%</span>
+        </div>
+        <div class="trait-bar-bg"><div class="trait-bar-fill" data-fill="98" style="background:linear-gradient(90deg,#fbbf24,#fb7185)"></div></div>
+      </div>
+      <div>
+        <div style="display:flex;justify-content:space-between;font-size:13px;margin-bottom:5px;">
+          <span style="color:#dde8f8;">다국어 영향력 (Cross-lingual Influence)</span>
+          <span style="color:#fb7185;">95%</span>
+        </div>
+        <div class="trait-bar-bg"><div class="trait-bar-fill" data-fill="95" style="background:linear-gradient(90deg,#fb7185,#60a5fa)"></div></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ⑦ SUFFIX ROLES GRID -->
+  <section class="section-card reveal">
+    <h2 style="font-size:13px;font-weight:700;color:#60a5fa;letter-spacing:3px;margin-bottom:16px;">SUFFIX ROLES</h2>
+    <div style="display:grid;grid-template-columns:repeat(2,1fr);gap:10px;">
+      <div style="padding:14px;border-radius:14px;background:rgba(96,165,250,0.08);border:1px solid rgba(96,165,250,0.20);">
+        <div style="font-size:20px;margin-bottom:6px;">⚖️</div>
+        <div style="font-size:13px;font-weight:700;color:#60a5fa;margin-bottom:4px;">법률·행정</div>
+        <div style="font-size:11px;color:#334d70;">~에 관한(공식적)<br/>judicial, official, ministerial</div>
+      </div>
+      <div style="padding:14px;border-radius:14px;background:rgba(34,211,238,0.08);border:1px solid rgba(34,211,238,0.20);">
+        <div style="font-size:20px;margin-bottom:6px;">🎓</div>
+        <div style="font-size:13px;font-weight:700;color:#22d3ee;margin-bottom:4px;">학술·과학</div>
+        <div style="font-size:11px;color:#334d70;">~의 성질을 가진<br/>spatial, differential,atorial</div>
+      </div>
+      <div style="padding:14px;border-radius:14px;background:rgba(251,191,36,0.08);border:1px solid rgba(251,191,36,0.20);">
+        <div style="font-size:20px;margin-bottom:6px;">👑</div>
+        <div style="font-size:13px;font-weight:700;color:#fbbf24;margin-bottom:4px;">권력·지위</div>
+        <div style="font-size:11px;color:#334d70;">~의 지위를 가진<br/>presidential, imperial, managerial</div>
+      </div>
+      <div style="padding:14px;border-radius:14px;background:rgba(251,113,133,0.08);border:1px solid rgba(251,113,133,0.20);">
+        <div style="font-size:20px;margin-bottom:6px;">🔗</div>
+        <div style="font-size:13px;font-weight:700;color:#fb7185;margin-bottom:4px;">‑al 의 격식 변형</div>
+        <div style="font-size:11px;color:#334d70;">‑ial = ‑i + ‑al<br/>essential, potential, material</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ⑧ CODE BLOCK -->
+  <section class="section-card reveal">
+    <h2 style="font-size:13px;font-weight:700;color:#67e8f9;letter-spacing:3px;margin-bottom:14px;">SUFFIX ANATOMY</h2>
+    <div class="code-block">
+<span class="cc">// suffix: -ial  (ial.kr)</span>
+<span class="ck">const</span> suffix = {
+  symbol:   <span class="cs">"‑ial"</span>,
+  base:     <span class="cs">"‑al (variant with ‑i linking vowel)"</span>,
+  origin:   <span class="cs">"Latin ‑ialis → Old French → English"</span>,
+  meaning:  [
+    <span class="cs">"of or relating to"</span>,
+    <span class="cs">"having the character of"</span>,
+    <span class="cs">"connected with (formal register)"</span>
+  ],
+  pos:      <span class="cs">"adjective-forming"</span>,
+  register: <span class="cs">"formal / academic / legal"</span>,
+  words:    <span class="cn">4000</span><span class="cc">+ // in English</span>,
+  <span class="cf">form</span>: (root) => root + <span class="cs">"ial"</span>,
+};
+<span class="cc">// e.g. suffix.form("offic") → "official"</span>
+    </div>
+  </section>
+
+  <!-- ⑨ ETYMOLOGY TIMELINE -->
+  <section class="section-card reveal">
+    <h2 style="font-size:13px;font-weight:700;color:#fde68a;letter-spacing:3px;margin-bottom:14px;">ETYMOLOGY TIMELINE</h2>
+    <div>
+      <div class="etym-line">
+        <div class="etym-dot" style="background:#fde68a;color:#fde68a;"></div>
+        <div>
+          <div style="font-size:12px;color:#fde68a;font-weight:700;">Proto-Indo-European (*‑yo‑)</div>
+          <div style="font-size:12px;color:#334d70;margin-top:2px;">관계·소속을 나타내는 형용사 형성 어근의 시원</div>
+        </div>
+      </div>
+      <div class="etym-line">
+        <div class="etym-dot" style="background:#fbbf24;color:#fbbf24;"></div>
+        <div>
+          <div style="font-size:12px;color:#fbbf24;font-weight:700;">Classical Latin (‑ialis)</div>
+          <div style="font-size:12px;color:#334d70;margin-top:2px;"><em>officialis</em> (공직의), <em>imperialis</em> (황제의) 등 공식 기록</div>
+        </div>
+      </div>
+      <div class="etym-line">
+        <div class="etym-dot" style="background:#60a5fa;color:#60a5fa;"></div>
+        <div>
+          <div style="font-size:12px;color:#60a5fa;font-weight:700;">Old French (‑iel / ‑ial)</div>
+          <div style="font-size:12px;color:#334d70;margin-top:2px;">Norman Conquest(1066) 이후 영어에 대거 유입</div>
+        </div>
+      </div>
+      <div class="etym-line">
+        <div class="etym-dot" style="background:#22d3ee;color:#22d3ee;"></div>
+        <div>
+          <div style="font-size:12px;color:#22d3ee;font-weight:700;">Middle English</div>
+          <div style="font-size:12px;color:#334d70;margin-top:2px;"><em>special</em>, <em>material</em> 등 일상어에 편입</div>
+        </div>
+      </div>
+      <div class="etym-line">
+        <div class="etym-dot" style="background:#34d399;color:#34d399;"></div>
+        <div>
+          <div style="font-size:12px;color:#34d399;font-weight:700;">Modern English</div>
+          <div style="font-size:12px;color:#334d70;margin-top:2px;">법률·정치·경제 텍스트에서 생산성 극대화</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ⑩ QUOTES -->
+  <section class="section-card reveal">
+    <h2 style="font-size:13px;font-weight:700;color:#fb7185;letter-spacing:3px;margin-bottom:14px;">LEXICAL WISDOM</h2>
+    <div style="display:flex;flex-direction:column;gap:12px;">
+      <div style="border-left:3px solid #60a5fa;padding:10px 14px;background:rgba(96,165,250,0.06);border-radius:0 10px 10px 0;">
+        <div style="font-size:16px;color:#dde8f8;font-style:italic;font-family:var(--font-display);">"The official language of diplomacy is precision."</div>
+        <div style="font-size:11px;color:#334d70;margin-top:5px;">— ial.kr</div>
+      </div>
+      <div style="border-left:3px solid #22d3ee;padding:10px 14px;background:rgba(34,211,238,0.06);border-radius:0 10px 10px 0;">
+        <div style="font-size:16px;color:#dde8f8;font-style:italic;font-family:var(--font-display);">"접미사 ‑ial 하나가 단어에 공식적 품격을 부여한다."</div>
+        <div style="font-size:11px;color:#334d70;margin-top:5px;">— ial.kr</div>
+      </div>
+      <div style="border-left:3px solid #fbbf24;padding:10px 14px;background:rgba(251,191,36,0.06);border-radius:0 10px 10px 0;">
+        <div style="font-size:16px;color:#dde8f8;font-style:italic;font-family:var(--font-display);">"Potential is the most powerful word in the English language."</div>
+        <div style="font-size:11px;color:#334d70;margin-top:5px;">— ial.kr</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ⑪ FEATURED VIDEO -->
+  <section class="section-card reveal">
+    <h2 style="font-size:13px;font-weight:700;color:#60a5fa;letter-spacing:3px;margin-bottom:14px;">FEATURED VIDEO</h2>
+    <div style="border-radius:14px;overflow:hidden;border:1px solid rgba(96,165,250,0.18);">
+      <div style="position:relative;padding-bottom:56.25%;height:0;overflow:hidden;">
+        <iframe src="https://www.youtube.com/embed/dQw4w9WgXcQ" title="Featured Video"
+          style="position:absolute;top:0;left:0;width:100%;height:100%;border:0;"
+          allow="accelerometer;autoplay;clipboard-write;encrypted-media;gyroscope;picture-in-picture"
+          allowfullscreen loading="lazy"></iframe>
+      </div>
+    </div>
+    <div style="display:flex;justify-content:space-between;align-items:center;margin-top:10px;">
+      <div>
+        <div style="font-size:13px;font-weight:600;color:#dde8f8;">‑ial 접미사 완전 정복 강의</div>
+        <div style="font-size:11px;color:#334d70;margin-top:3px;">ial.kr 대표 강의</div>
+      </div>
+      <div style="text-align:right;">
+        <div style="font-size:12px;color:#60a5fa;font-weight:600;">36.4K views</div>
+        <div style="font-size:11px;color:#334d70;">5.8K likes</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ⑫ PLAYLIST -->
+  <section class="section-card reveal">
+    <h2 style="font-size:13px;font-weight:700;color:#22d3ee;letter-spacing:3px;margin-bottom:14px;">PLAYLIST</h2>
+    <div style="display:flex;flex-direction:column;gap:10px;">
+      <a href="https://youtube.com/@ial.kr" target="_blank" rel="noopener"
+         style="display:flex;gap:12px;text-decoration:none;align-items:center;padding:10px;border-radius:12px;background:rgba(255,255,255,0.03);border:1px solid rgba(96,165,250,0.10);transition:background 0.2s;"
+         onmouseover="this.style.background='rgba(96,165,250,0.08)'" onmouseout="this.style.background='rgba(255,255,255,0.03)'">
+        <img src="https://images.unsplash.com/photo-1481627834876-b7833e8f5570?w=120&h=68&fit=crop" alt="ep1"
+             style="width:100px;height:56px;object-fit:cover;border-radius:8px;flex-shrink:0;"/>
+        <div>
+          <div style="font-size:13px;font-weight:600;color:#dde8f8;">Ep.01 offic<strong style="color:#60a5fa;">ial</strong> vs. offic<strong style="color:#22d3ee;">al</strong> 차이</div>
+          <div style="font-size:11px;color:#334d70;margin-top:3px;">22:18 · 29.4K views</div>
+        </div>
+      </a>
+      <a href="https://youtube.com/@ial.kr" target="_blank" rel="noopener"
+         style="display:flex;gap:12px;text-decoration:none;align-items:center;padding:10px;border-radius:12px;background:rgba(255,255,255,0.03);border:1px solid rgba(96,165,250,0.10);transition:background 0.2s;"
+         onmouseover="this.style.background='rgba(96,165,250,0.08)'" onmouseout="this.style.background='rgba(255,255,255,0.03)'">
+        <img src="https://images.unsplash.com/photo-1524995997946-a1c2e315a42f?w=120&h=68&fit=crop" alt="ep2"
+             style="width:100px;height:56px;object-fit:cover;border-radius:8px;flex-shrink:0;"/>
+        <div>
+          <div style="font-size:13px;font-weight:600;color:#dde8f8;">Ep.02 presid<strong style="color:#fbbf24;">ential</strong> 어원 탐구</div>
+          <div style="font-size:11px;color:#334d70;margin-top:3px;">19:45 · 21.7K views</div>
+        </div>
+      </a>
+      <a href="https://youtube.com/@ial.kr" target="_blank" rel="noopener"
+         style="display:flex;gap:12px;text-decoration:none;align-items:center;padding:10px;border-radius:12px;background:rgba(255,255,255,0.03);border:1px solid rgba(96,165,250,0.10);transition:background 0.2s;"
+         onmouseover="this.style.background='rgba(96,165,250,0.08)'" onmouseout="this.style.background='rgba(255,255,255,0.03)'">
+        <img src="https://images.unsplash.com/photo-1503676260728-1c00da094a0b?w=120&h=68&fit=crop" alt="ep3"
+             style="width:100px;height:56px;object-fit:cover;border-radius:8px;flex-shrink:0;"/>
+        <div>
+          <div style="font-size:13px;font-weight:600;color:#dde8f8;">Ep.03 essent<strong style="color:#34d399;">ial</strong> — 핵심 어휘의 비밀</div>
+          <div style="font-size:11px;color:#334d70;margin-top:3px;">17:22 · 18.1K views</div>
+        </div>
+      </a>
+    </div>
+  </section>
+
+  <!-- ⑬ IMAGE CAROUSEL -->
+  <section class="section-card reveal" style="padding:24px 16px;">
+    <h2 style="font-size:13px;font-weight:700;color:#6ee7b7;letter-spacing:3px;margin-bottom:14px;">GALLERY</h2>
+    <div style="position:relative;overflow:hidden;border-radius:14px;" id="carousel">
+      <div class="carousel-track" id="carouselTrack">
+        <div class="carousel-slide">
+          <img src="https://images.unsplash.com/photo-1589829545856-d10d557cf95f?w=480&h=220&fit=crop" alt="s1" loading="lazy"/>
+          <div style="padding:10px 12px;background:rgba(11,20,34,0.92);">
+            <div style="font-size:13px;font-weight:600;color:#60a5fa;">Official Chambers</div>
+            <div style="font-size:11px;color:#334d70;">공식의 공간</div>
+          </div>
+        </div>
+        <div class="carousel-slide">
+          <img src="https://images.unsplash.com/photo-1524995997946-a1c2e315a42f?w=480&h=220&fit=crop" alt="s2" loading="lazy"/>
+          <div style="padding:10px 12px;background:rgba(11,20,34,0.92);">
+            <div style="font-size:13px;font-weight:600;color:#22d3ee;">Special Knowledge</div>
+            <div style="font-size:11px;color:#334d70;">특별한 지식</div>
+          </div>
+        </div>
+        <div class="carousel-slide">
+          <img src="https://images.unsplash.com/photo-1481627834876-b7833e8f5570?w=480&h=220&fit=crop" alt="s3" loading="lazy"/>
+          <div style="padding:10px 12px;background:rgba(11,20,34,0.92);">
+            <div style="font-size:13px;font-weight:600;color:#fbbf24;">Financial Wisdom</div>
+            <div style="font-size:11px;color:#334d70;">재정의 지혜</div>
+          </div>
+        </div>
+        <div class="carousel-slide">
+          <img src="https://images.unsplash.com/photo-1457369804613-52c61a468e7d?w=480&h=220&fit=crop" alt="s4" loading="lazy"/>
+          <div style="padding:10px 12px;background:rgba(11,20,34,0.92);">
+            <div style="font-size:13px;font-weight:600;color:#fb7185;">Essential Study</div>
+            <div style="font-size:11px;color:#334d70;">핵심을 담은 탐구</div>
+          </div>
+        </div>
+        <div class="carousel-slide">
+          <img src="https://images.unsplash.com/photo-1434030216411-0b793f4b4173?w=480&h=220&fit=crop" alt="s5" loading="lazy"/>
+          <div style="padding:10px 12px;background:rgba(11,20,34,0.92);">
+            <div style="font-size:13px;font-weight:600;color:#34d399;">Potential Unlocked</div>
+            <div style="font-size:11px;color:#334d70;">잠재력을 열다</div>
+          </div>
+        </div>
+      </div>
+      <button id="carouselPrev" style="position:absolute;left:8px;top:50%;transform:translateY(-50%);width:34px;height:34px;border-radius:50%;background:rgba(11,20,34,0.85);border:1px solid rgba(96,165,250,0.28);color:#60a5fa;font-size:16px;cursor:pointer;display:flex;align-items:center;justify-content:center;">‹</button>
+      <button id="carouselNext" style="position:absolute;right:8px;top:50%;transform:translateY(-50%);width:34px;height:34px;border-radius:50%;background:rgba(11,20,34,0.85);border:1px solid rgba(96,165,250,0.28);color:#60a5fa;font-size:16px;cursor:pointer;display:flex;align-items:center;justify-content:center;">›</button>
+    </div>
+    <div style="display:flex;justify-content:center;gap:7px;margin-top:12px;" id="carouselDots"></div>
+  </section>
+
+  <!-- ⑭ SPOTLIGHT -->
+  <section class="section-card reveal" style="padding:0;overflow:hidden;">
+    <div style="position:relative;">
+      <img src="https://images.unsplash.com/photo-1589829545856-d10d557cf95f?w=480&h=200&fit=crop" alt="spotlight"
+           style="width:100%;height:200px;object-fit:cover;display:block;"/>
+      <div style="position:absolute;inset:0;background:linear-gradient(180deg,transparent 15%,rgba(2,3,6,0.93) 100%);display:flex;flex-direction:column;justify-content:flex-end;padding:20px 24px;">
+        <div style="font-size:11px;color:#60a5fa;font-weight:700;letter-spacing:3px;margin-bottom:4px;">SPOTLIGHT</div>
+        <div style="font-size:20px;font-weight:400;color:#dde8f8;font-family:var(--font-display);">Official. Essential. Presidential.</div>
+        <div style="font-size:12px;color:#7a9ec4;margin-top:5px;">‑ial 하나면 품격이 달라진다</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ⑮ MUSIC PLAYER -->
+  <section class="section-card reveal">
+    <h2 style="font-size:13px;font-weight:700;color:#93c5fd;letter-spacing:3px;margin-bottom:16px;">MUSIC PLAYER</h2>
+    <div style="display:flex;align-items:center;gap:20px;margin-bottom:16px;">
+      <div class="vinyl" id="vinyl"><div class="vinyl-center"></div></div>
+      <div style="flex:1;">
+        <div id="trackName" style="font-size:14px;font-weight:700;color:#dde8f8;">Official Overture</div>
+        <div id="trackArtist" style="font-size:11px;color:#334d70;margin-top:2px;">ial.kr OST Vol.1</div>
+        <div style="display:flex;align-items:center;gap:10px;margin-top:10px;">
+          <span id="currentTime" style="font-size:10px;color:#334d70;">0:00</span>
+          <div class="progress-bar-bg" id="progressBarBg" style="flex:1;">
+            <div class="progress-bar-fill" id="progressBarFill"></div>
+          </div>
+          <span id="totalTime" style="font-size:10px;color:#334d70;">4:05</span>
+        </div>
+      </div>
+    </div>
+    <div style="display:flex;justify-content:center;gap:20px;margin-bottom:16px;">
+      <button id="prevBtn" style="background:rgba(255,255,255,0.06);border:1px solid rgba(96,165,250,0.20);color:#b8cce8;width:38px;height:38px;border-radius:50%;cursor:pointer;font-size:14px;">⏮</button>
+      <button id="playBtn" style="background:linear-gradient(135deg,#3b82f6,#22d3ee);border:none;color:#020306;width:46px;height:46px;border-radius:50%;cursor:pointer;font-size:18px;">▶</button>
+      <button id="nextBtn" style="background:rgba(255,255,255,0.06);border:1px solid rgba(96,165,250,0.20);color:#b8cce8;width:38px;height:38px;border-radius:50%;cursor:pointer;font-size:14px;">⏭</button>
+    </div>
+    <div style="display:flex;flex-direction:column;gap:6px;">
+      <div class="track-item active" data-track="0">
+        <span style="width:22px;height:22px;border-radius:50%;background:rgba(96,165,250,0.18);display:flex;align-items:center;justify-content:center;font-size:10px;color:#60a5fa;flex-shrink:0;">1</span>
+        <div style="flex:1;"><div style="font-size:13px;color:#dde8f8;">Official Overture</div><div style="font-size:10px;color:#334d70;">4:05</div></div>
+        <span style="color:#60a5fa;font-size:11px;">♫</span>
+      </div>
+      <div class="track-item" data-track="1">
+        <span style="width:22px;height:22px;border-radius:50%;background:rgba(34,211,238,0.15);display:flex;align-items:center;justify-content:center;font-size:10px;color:#22d3ee;flex-shrink:0;">2</span>
+        <div style="flex:1;"><div style="font-size:13px;color:#dde8f8;">Essential Tide</div><div style="font-size:10px;color:#334d70;">3:48</div></div>
+        <span style="color:#22d3ee;font-size:11px;">♪</span>
+      </div>
+      <div class="track-item" data-track="2">
+        <span style="width:22px;height:22px;border-radius:50%;background:rgba(251,191,36,0.15);display:flex;align-items:center;justify-content:center;font-size:10px;color:#fbbf24;flex-shrink:0;">3</span>
+        <div style="flex:1;"><div style="font-size:13px;color:#dde8f8;">Potential Rising</div><div style="font-size:10px;color:#334d70;">4:21</div></div>
+        <span style="color:#fbbf24;font-size:11px;">♫</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- ⑯ PROJECTS -->
+  <section class="section-card reveal">
+    <h2 style="font-size:13px;font-weight:700;color:#22d3ee;letter-spacing:3px;margin-bottom:14px;">PROJECTS</h2>
+    <div style="display:grid;grid-template-columns:repeat(2,1fr);gap:10px;">
+      <div style="padding:14px;border-radius:14px;background:rgba(96,165,250,0.08);border:1px solid rgba(96,165,250,0.20);">
+        <div style="font-size:18px;margin-bottom:6px;">📚</div>
+        <div style="font-size:13px;font-weight:700;color:#60a5fa;margin-bottom:4px;">‑ial Dictionary</div>
+        <div style="font-size:11px;color:#334d70;margin-bottom:8px;">4,000+ 격식 어휘 사전</div>
+        <span style="font-size:10px;padding:2px 8px;border-radius:10px;background:rgba(110,231,183,0.15);color:#6ee7b7;border:1px solid rgba(110,231,183,0.30);">LIVE</span>
+      </div>
+      <div style="padding:14px;border-radius:14px;background:rgba(34,211,238,0.08);border:1px solid rgba(34,211,238,0.20);">
+        <div style="font-size:18px;margin-bottom:6px;">⚖️</div>
+        <div style="font-size:13px;font-weight:700;color:#22d3ee;margin-bottom:4px;">Legal Vocab Lab</div>
+        <div style="font-size:11px;color:#334d70;margin-bottom:8px;">법률 어휘 분석 도구</div>
+        <span style="font-size:10px;padding:2px 8px;border-radius:10px;background:rgba(34,211,238,0.15);color:#22d3ee;border:1px solid rgba(34,211,238,0.30);">BETA</span>
+      </div>
+      <div style="padding:14px;border-radius:14px;background:rgba(251,191,36,0.08);border:1px solid rgba(251,191,36,0.20);">
+        <div style="font-size:18px;margin-bottom:6px;">🎮</div>
+        <div style="font-size:13px;font-weight:700;color:#fbbf24;margin-bottom:4px;">‑ial Quest</div>
+        <div style="font-size:11px;color:#334d70;margin-bottom:8px;">격식 어휘 학습 게임</div>
+        <span style="font-size:10px;padding:2px 8px;border-radius:10px;background:rgba(251,191,36,0.15);color:#fbbf24;border:1px solid rgba(251,191,36,0.30);">DEV</span>
+      </div>
+      <div style="padding:14px;border-radius:14px;background:rgba(251,113,133,0.08);border:1px solid rgba(251,113,133,0.20);">
+        <div style="font-size:18px;margin-bottom:6px;">🤖</div>
+        <div style="font-size:13px;font-weight:700;color:#fb7185;margin-bottom:4px;">‑ial AI Writer</div>
+        <div style="font-size:11px;color:#334d70;margin-bottom:8px;">AI 격식 문장 생성기</div>
+        <span style="font-size:10px;padding:2px 8px;border-radius:10px;background:rgba(251,113,133,0.15);color:#fb7185;border:1px solid rgba(251,113,133,0.30);">SOON</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- ⑰ RECENT POSTS -->
+  <section class="section-card reveal">
+    <h2 style="font-size:13px;font-weight:700;color:#fb7185;letter-spacing:3px;margin-bottom:14px;">RECENT POSTS</h2>
+    <div style="display:flex;flex-direction:column;gap:12px;">
+      <div style="padding:12px 14px;border-radius:12px;background:rgba(255,255,255,0.03);border:1px solid rgba(96,165,250,0.10);">
+        <div style="display:flex;gap:6px;flex-wrap:wrap;margin-bottom:6px;">
+          <span style="font-size:10px;padding:2px 8px;border-radius:10px;background:rgba(96,165,250,0.14);color:#60a5fa;">#suffix</span>
+          <span style="font-size:10px;padding:2px 8px;border-radius:10px;background:rgba(34,211,238,0.14);color:#22d3ee;">#english</span>
+        </div>
+        <div style="font-size:14px;font-weight:600;color:#dde8f8;margin-bottom:4px;">offic<strong style="color:#60a5fa;">ial</strong>이 왜 official인지 — ‑ial의 비밀</div>
+        <div style="font-size:11px;color:#334d70;">2025.12.18</div>
+      </div>
+      <div style="padding:12px 14px;border-radius:12px;background:rgba(255,255,255,0.03);border:1px solid rgba(96,165,250,0.10);">
+        <div style="display:flex;gap:6px;flex-wrap:wrap;margin-bottom:6px;">
+          <span style="font-size:10px;padding:2px 8px;border-radius:10px;background:rgba(251,191,36,0.14);color:#fbbf24;">#etymology</span>
+          <span style="font-size:10px;padding:2px 8px;border-radius:10px;background:rgba(251,113,133,0.14);color:#fb7185;">#latin</span>
+        </div>
+        <div style="font-size:14px;font-weight:600;color:#dde8f8;margin-bottom:4px;">라틴어 ‑ialis가 영어 법률 용어를 지배하다</div>
+        <div style="font-size:11px;color:#334d70;">2025.12.02</div>
+      </div>
+      <div style="padding:12px 14px;border-radius:12px;background:rgba(255,255,255,0.03);border:1px solid rgba(96,165,250,0.10);">
+        <div style="display:flex;gap:6px;flex-wrap:wrap;margin-bottom:6px;">
+          <span style="font-size:10px;padding:2px 8px;border-radius:10px;background:rgba(52,211,153,0.14);color:#34d399;">#vocabulary</span>
+          <span style="font-size:10px;padding:2px 8px;border-radius:10px;background:rgba(96,165,250,0.14);color:#60a5fa;">#word</span>
+        </div>
+        <div style="font-size:14px;font-weight:600;color:#dde8f8;margin-bottom:4px;">potent<strong style="color:#fbbf24;">ial</strong> — 잠재력이라는 단어의 탄생</div>
+        <div style="font-size:11px;color:#334d70;">2025.11.20</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ⑱ FAQ -->
+  <section class="section-card reveal">
+    <h2 style="font-size:13px;font-weight:700;color:#60a5fa;letter-spacing:3px;margin-bottom:14px;">FAQ</h2>
+    <div style="display:flex;flex-direction:column;gap:8px;">
+      <details class="faq-item">
+        <summary>‑ial 접미사는 정확히 무엇인가요?</summary>
+        <div class="faq-body">
+          ‑ial은 라틴어 <em>‑ialis</em>에서 유래한 영어 형용사 접미사입니다.
+          <strong>‑al</strong>의 격식·학술적 변형으로, 명사 어근에 붙어
+          <strong>"~에 관한, ~의 성질을 가진"</strong>이라는 의미를 부여합니다.
+          법률, 행정, 학술 텍스트에서 특히 활발하게 사용됩니다.
+          예: official(공식적인), judicial(사법의), financial(재정의).
+        </div>
+      </details>
+      <details class="faq-item">
+        <summary>‑ial과 ‑al은 어떻게 다른가요?</summary>
+        <div class="faq-body">
+          <strong>‑al</strong>이 일반적인 형용사 접미사라면, <strong>‑ial</strong>은
+          어근 끝에 <em>‑i‑</em> 연결 모음이 붙은 형태입니다.
+          어근이 <em>‑ce, ‑ge, ‑y</em> 등으로 끝날 때 발음과 형태를 자연스럽게 연결하기 위해
+          ‑ial이 선택됩니다. 예: offic + ial → official (vs. nation + al → national).
+        </div>
+      </details>
+      <details class="faq-item">
+        <summary>ial.kr은 어떤 콘텐츠를 제공하나요?</summary>
+        <div class="faq-body">
+          ial.kr은 영어 접미사 <strong>‑ial</strong>을 중심으로 격식 어휘 탐구, 어원 분석,
+          법률·학술 영어 학습 콘텐츠를 제공합니다. 강의 영상, 인터랙티브 어휘 사전,
+          법률 어휘 Lab 등을 통해 고급 영어 어휘력을 체계적으로 키울 수 있도록 돕습니다.
+        </div>
+      </details>
+    </div>
+  </section>
+
+  <!-- ⑲ NEWSLETTER -->
+  <section class="section-card reveal">
+    <h2 style="font-size:13px;font-weight:700;color:#6ee7b7;letter-spacing:3px;margin-bottom:6px;">NEWSLETTER</h2>
+    <p style="font-size:12px;color:#334d70;margin-bottom:14px;">매주 ‑ial 격식 어휘 큐레이션을 받아보세요.</p>
+    <div style="display:flex;flex-direction:column;gap:10px;">
+      <input class="form-input" id="nlEmail" type="email" placeholder="your@email.com" autocomplete="email"/>
+      <button class="form-btn" onclick="handleNewsletter()">구독하기</button>
+      <div id="nlMsg" style="font-size:12px;text-align:center;min-height:16px;"></div>
+    </div>
+  </section>
+
+  <!-- ⑳ CONTACT -->
+  <section class="section-card reveal">
+    <h2 style="font-size:13px;font-weight:700;color:#fb7185;letter-spacing:3px;margin-bottom:14px;">CONTACT</h2>
+    <div style="display:flex;flex-direction:column;gap:10px;">
+      <input class="form-input" id="ctName"  type="text"  placeholder="이름 (Name)"   autocomplete="name"/>
+      <input class="form-input" id="ctEmail" type="email" placeholder="이메일 (Email)" autocomplete="email"/>
+      <select class="form-input" id="ctTopic">
+        <option value="" disabled selected>문의 유형 선택</option>
+        <option value="collab">협업 제안</option>
+        <option value="study">어휘 학습 문의</option>
+        <option value="content">콘텐츠 제작</option>
+        <option value="other">기타</option>
+      </select>
+      <textarea class="form-input" id="ctMsg" rows="4" placeholder="메시지를 입력하세요..." style="resize:vertical;"></textarea>
+      <button class="form-btn" onclick="handleContact()">보내기</button>
+      <div id="ctMsg2" style="font-size:12px;text-align:center;min-height:16px;"></div>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer style="text-align:center;padding:24px 0 0;">
+    <div style="display:flex;flex-wrap:wrap;gap:6px;justify-content:center;margin-bottom:14px;">
+      <span class="tag" style="color:#60a5fa;border-color:rgba(96,165,250,0.28);background:rgba(96,165,250,0.06);">#suffix</span>
+      <span class="tag" style="color:#22d3ee;border-color:rgba(34,211,238,0.28);background:rgba(34,211,238,0.06);">#‑ial</span>
+      <span class="tag" style="color:#fbbf24;border-color:rgba(251,191,36,0.28);background:rgba(251,191,36,0.06);">#‑al</span>
+      <span class="tag" style="color:#fb7185;border-color:rgba(251,113,133,0.28);background:rgba(251,113,133,0.06);">#영단어</span>
+      <span class="tag" style="color:#34d399;border-color:rgba(52,211,153,0.28);background:rgba(52,211,153,0.06);">#어원</span>
+      <span class="tag" style="color:#93c5fd;border-color:rgba(147,197,253,0.28);background:rgba(147,197,253,0.06);">#Latin</span>
+    </div>
+    <div style="font-size:16px;font-weight:400;color:#dde8f8;font-family:var(--font-display);margin-bottom:6px;">Every word, officially yours.</div>
+    <div style="font-size:12px;color:#1a2e44;margin-bottom:8px;font-family:var(--font-korean);">품격을 더하는 언어, ‑ial</div>
+    <a href="https://ial.kr" style="font-size:13px;color:#60a5fa;text-decoration:none;">🌐 ial.kr</a>
+    <div style="font-size:11px;color:#0d1a2e;margin-top:10px;">© 2025 ial.kr — All rights reserved.</div>
+  </footer>
+
+</main>
+
+<!-- ══════════════ SCRIPTS ══════════════ -->
+<script>
+/* ── Particles ── */
+(function() {
+  const symbols = ['‑ial','‑al','◈','◆','▸','⬡','✦','★','◇','※','∞','α','β','λ','⚖'];
+  const colors  = ['#60a5fa','#22d3ee','#fbbf24','#fb7185','#34d399','#93c5fd','#67e8f9'];
+  const wrap = document.getElementById('particles');
+  for (let i = 0; i < 48; i++) {
+    const p = document.createElement('span');
+    p.className = 'particle';
+    p.textContent = symbols[Math.floor(Math.random() * symbols.length)];
+    p.style.left = Math.random() * 100 + 'vw';
+    p.style.color = colors[Math.floor(Math.random() * colors.length)];
+    p.style.animationDuration = (10 + Math.random() * 18) + 's';
+    p.style.animationDelay   = (-Math.random() * 20) + 's';
+    p.style.fontSize = (10 + Math.random() * 8) + 'px';
+    wrap.appendChild(p);
+  }
+})();
+
+/* ── Prestige Meter (20 segs, 17 lit) ── */
+(function() {
+  const meter = document.getElementById('depthMeter');
+  for (let i = 0; i < 20; i++) {
+    const s = document.createElement('div');
+    s.className = 'prestige-seg';
+    s.id = 'ps' + i;
+    if (i < 17) s.dataset.fill = '1';
+    meter.appendChild(s);
+  }
+})();
+
+/* ── Count-up ── */
+function countUp(el, target, duration) {
+  let v = 0;
+  const step = target / (duration / 16);
+  const t = setInterval(() => {
+    v = Math.min(v + step, target);
+    el.textContent = Math.round(v).toLocaleString();
+    if (v >= target) clearInterval(t);
+  }, 16);
+}
+
+/* ── Scroll Reveal ── */
+const obs = new IntersectionObserver(entries => {
+  entries.forEach(e => {
+    if (!e.isIntersecting) return;
+    const el = e.target;
+    el.classList.add('visible');
+
+    el.querySelectorAll('.trait-bar-fill[data-fill]').forEach(b => {
+      b.style.width = b.dataset.fill + '%';
+    });
+
+    if (el.querySelector('#depthMeter')) {
+      let i = 0;
+      const segs = document.querySelectorAll('.prestige-seg[data-fill]');
+      const pct  = document.getElementById('depthPct');
+      const iv = setInterval(() => {
+        if (i >= segs.length) { clearInterval(iv); return; }
+        segs[i].classList.add('lit');
+        pct.textContent = Math.round(((i + 1) / 20) * 100) + '%';
+        i++;
+      }, 65);
+    }
+
+    el.querySelectorAll('.count-up[data-target]').forEach(cu => {
+      countUp(cu, parseInt(cu.dataset.target), 1500);
+    });
+
+    obs.unobserve(el);
+  });
+}, { threshold: 0.12 });
+document.querySelectorAll('.reveal').forEach(el => obs.observe(el));
+
+/* ── Carousel ── */
+(function() {
+  const track  = document.getElementById('carouselTrack');
+  const dotsEl = document.getElementById('carouselDots');
+  const TOTAL  = 5;
+  let cur = 0, timer;
+
+  for (let i = 0; i < TOTAL; i++) {
+    const d = document.createElement('button');
+    d.className = 'carousel-dot' + (i === 0 ? ' active' : '');
+    d.setAttribute('aria-label', 'slide ' + (i + 1));
+    d.onclick = () => { goTo(i); reset(); };
+    dotsEl.appendChild(d);
+  }
+
+  function goTo(n) {
+    cur = (n + TOTAL) % TOTAL;
+    track.style.transform = 'translateX(-' + cur * 100 + '%)';
+    dotsEl.querySelectorAll('.carousel-dot').forEach((d, i) => d.classList.toggle('active', i === cur));
+  }
+  function reset() { clearInterval(timer); timer = setInterval(() => goTo(cur + 1), 5200); }
+
+  document.getElementById('carouselPrev').onclick = () => { goTo(cur - 1); reset(); };
+  document.getElementById('carouselNext').onclick = () => { goTo(cur + 1); reset(); };
+  document.addEventListener('keydown', ev => {
+    if (ev.key === 'ArrowLeft')  { goTo(cur - 1); reset(); }
+    if (ev.key === 'ArrowRight') { goTo(cur + 1); reset(); }
+  });
+
+  let tx = 0;
+  const el = document.getElementById('carousel');
+  el.addEventListener('touchstart', ev => { tx = ev.changedTouches[0].clientX; }, { passive: true });
+  el.addEventListener('touchend',   ev => {
+    const dx = ev.changedTouches[0].clientX - tx;
+    if (Math.abs(dx) > 40) { goTo(cur + (dx < 0 ? 1 : -1)); reset(); }
+  });
+
+  reset();
+})();
+
+/* ── Music Player ── */
+(function() {
+  const tracks = [
+    { title: 'Official Overture', artist: 'ial.kr OST Vol.1', dur: 245 },
+    { title: 'Essential Tide',    artist: 'ial.kr OST Vol.1', dur: 228 },
+    { title: 'Potential Rising',  artist: 'ial.kr OST Vol.2', dur: 261 },
+  ];
+  let cur = 0, playing = false, prog = 0, tmr;
+
+  const vinyl   = document.getElementById('vinyl');
+  const playBtn = document.getElementById('playBtn');
+  const tName   = document.getElementById('trackName');
+  const tArtist = document.getElementById('trackArtist');
+  const curT    = document.getElementById('currentTime');
+  const totT    = document.getElementById('totalTime');
+  const fill    = document.getElementById('progressBarFill');
+  const items   = document.querySelectorAll('.track-item');
+
+  const fmt = s => Math.floor(s / 60) + ':' + (s % 60 < 10 ? '0' : '') + Math.floor(s % 60);
+
+  function load(i) {
+    cur = i; prog = 0;
+    tName.textContent   = tracks[i].title;
+    tArtist.textContent = tracks[i].artist;
+    totT.textContent    = fmt(tracks[i].dur);
+    curT.textContent    = '0:00';
+    fill.style.width    = '0%';
+    items.forEach((it, j) => it.classList.toggle('active', j === i));
+  }
+
+  function tick() {
+    if (!playing) return;
+    prog++;
+    if (prog >= tracks[cur].dur) { prog = 0; load((cur + 1) % tracks.length); }
+    curT.textContent = fmt(prog);
+    fill.style.width = (prog / tracks[cur].dur * 100) + '%';
+  }
+
+  function togglePlay() {
+    playing = !playing;
+    playBtn.textContent = playing ? '⏸' : '▶';
+    vinyl.classList.toggle('playing', playing);
+    clearInterval(tmr);
+    if (playing) tmr = setInterval(tick, 1000);
+  }
+
+  playBtn.onclick = togglePlay;
+  document.getElementById('prevBtn').onclick = () => {
+    load((cur - 1 + tracks.length) % tracks.length);
+    if (playing) { clearInterval(tmr); tmr = setInterval(tick, 1000); }
+  };
+  document.getElementById('nextBtn').onclick = () => {
+    load((cur + 1) % tracks.length);
+    if (playing) { clearInterval(tmr); tmr = setInterval(tick, 1000); }
+  };
+  items.forEach((it, i) => {
+    it.onclick = () => {
+      load(i);
+      if (!playing) togglePlay();
+      else { clearInterval(tmr); tmr = setInterval(tick, 1000); }
+    };
+  });
+  document.getElementById('progressBarBg').onclick = function(ev) {
+    const pct = ev.offsetX / this.offsetWidth;
+    prog = Math.floor(pct * tracks[cur].dur);
+    curT.textContent = fmt(prog);
+    fill.style.width = (pct * 100) + '%';
+  };
+
+  load(0);
+})();
+
+/* ── Scroll to Top ── */
+const sBtn = document.getElementById('scrollTop');
+window.addEventListener('scroll', () => sBtn.classList.toggle('show', window.scrollY > 300));
+
+/* ── Newsletter ── */
+function handleNewsletter() {
+  const email = document.getElementById('nlEmail').value.trim();
+  const msg   = document.getElementById('nlMsg');
+  if (!email || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
+    msg.textContent = '⚠️ 유효한 이메일을 입력해 주세요.';
+    msg.style.color = '#fb7185'; return;
+  }
+  msg.textContent = '✅ 구독 완료! 매주 격식 어휘 큐레이션을 보내드립니다.';
+  msg.style.color = '#34d399';
+  document.getElementById('nlEmail').value = '';
+}
+
+/* ── Contact ── */
+function handleContact() {
+  const name  = document.getElementById('ctName').value.trim();
+  const email = document.getElementById('ctEmail').value.trim();
+  const topic = document.getElementById('ctTopic').value;
+  const msg   = document.getElementById('ctMsg').value.trim();
+  const out   = document.getElementById('ctMsg2');
+  if (!name || !email || !topic || !msg) {
+    out.textContent = '⚠️ 모든 필드를 입력해 주세요.';
+    out.style.color = '#fb7185'; return;
+  }
+  if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
+    out.textContent = '⚠️ 유효한 이메일을 입력해 주세요.';
+    out.style.color = '#fb7185'; return;
+  }
+  out.textContent = '✅ 메시지가 전송되었습니다. 곧 답변 드리겠습니다!';
+  out.style.color = '#34d399';
+  ['ctName','ctEmail','ctMsg'].forEach(id => document.getElementById(id).value = '');
+  document.getElementById('ctTopic').value = '';
+}
+</script>
+
+</body>
+</html>
